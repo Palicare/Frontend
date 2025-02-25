@@ -1,5 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 
+:root {
+    --color-primary: #3B7E9B;
+    --color-secondary: #F8F9FA;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
 h1 {
     font-family: "Comic Sans MS", "Comic Sans", "Comic Neue";
+}
+
+.header-container {
+    background-color: var(--color-primary);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
 }
