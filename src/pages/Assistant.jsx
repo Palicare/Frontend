@@ -7,6 +7,8 @@ import MicrophoneIcon from '../Assets/Microphone.svg';
 import RecordingIcon from "../Assets/Recording.svg";
 import Send from "../Assets/send.svg"
 import X from "../Assets/X.svg"
+import RoomIcon from "../Assets/Room.svg"
+import DefaultUserIcon from "../Assets/DefaultUser.png"
 
 export default function() {
     const {patientId} = useParams();
@@ -120,13 +122,34 @@ export default function() {
         <>
             <NavigationBar/>
             <div className="contentArea">
-            <div className="patientOverview">
-            {patientData ? (
-                <pre>{JSON.stringify(patientData, null, 2)}</pre>
-            ) : (
-                <p>Loading patient data...</p>
-            )}
-        </div>
+            <div className="profile-container">
+                <div className="profile-image">
+                    <img src={patientData?.imageUrl || DefaultUserIcon } style={{ width: '200px', height: '200px', display: 'inline-block' }}/>
+                </div>
+
+                <div className="profile-info-box">
+                    <div className="profile-info-box-headline">
+                        <div className="left">
+                        <p>Persönliche Daten:</p>
+                        </div>
+                        <div className="right">
+                        <img src={RoomIcon}/>
+                        <p>{patientData?.roomNumber}</p>
+                        </div>
+                    </div>
+                    <div className="profile-info">
+                        <br/>
+                        <p><strong>Name: </strong>{patientData?.firstName} {patientData?.lastName}</p>
+                        <p><strong>Geschlecht:</strong> {patientData?.gender}</p>
+                        <p><strong>Geburtsdatum:</strong> {patientData?.dob}</p>
+                        <p><strong>Notfallkontakt:</strong> {patientData?.emergencyContact}</p>
+                        <p><strong>Religion:</strong> {patientData?.religion}</p>
+                        <p><strong>Nationalität:</strong> {patientData?.nationality}</p>
+                        <p><strong>Ernäherungstyp:</strong> {patientData?.diet}</p>
+                        <p><strong>Krankenkasse:</strong> {patientData?.insurance}</p>
+                    </div>
+                </div>
+            </div>
 
             <div className="chat-area">
             <h1>New Chat - Patient {patientId}</h1> 
