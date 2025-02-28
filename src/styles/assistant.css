@@ -1,0 +1,120 @@
+
+@import url("defaultcolors.css");
+
+.contentArea{
+    margin-top: 5.8vh;
+    margin-bottom:25vh;
+}
+
+.lowerInteractionBar{
+    background-color: var(--main-blue);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.interactionButtonArea{
+    background: var(--main-blue);
+    width: 10em;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.interactionButton {
+    border: none;
+    background: var(--main-blue);
+    display: block;
+    position: relative;
+    top: -3em;
+    margin: 0 auto;
+    border-radius: 4em;
+    padding: 1em;
+}
+
+.minorInteractionA, 
+.minorInteractionB, 
+.minorInteractionC {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    border-radius: 50%; 
+    border: 2px solid var(--main-blue);
+    height: 50px; 
+    width: 50px;
+    background-color: white;
+}
+
+.minorInteractionA {
+    top: -5em;
+    left: -3em;
+}
+
+.minorInteractionB {
+    top: -8em;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.minorInteractionC {
+    top: -5em;
+    right: -3em;
+}
+
+
+img{
+    background-color: transparent;
+}
+
+
+.chatArea{
+    margin-top: 10em;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.text{
+    border-radius: 10px;
+    padding: 0.5em;
+    margin: 0.1em;
+    max-width: 70vw;
+    min-width: 20vw;
+    width: fit-content;
+    word-wrap: break-word;
+}
+
+.humanText{
+    background-color: var(--dark-blue);
+    align-self: flex-end;
+}
+
+.chatbotText{
+    background-color: var(--main-blue);
+    align-self: flex-start;
+    
+}
+
+audio::-webkit-media-controls-volume-slider,
+audio::-webkit-media-controls-mute-button
+ {
+  display: none !important;
+}
+audio{
+    background-color: transparent;
+    width: 100%;
+}
+
+p{
+    font-size: 16px;
+    font-weight: 700;
+    background-color: transparent;
+    color: var(--off-white);
+}
