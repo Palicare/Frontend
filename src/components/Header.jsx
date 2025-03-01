@@ -1,6 +1,7 @@
 import paliLogo1 from "../assets/PaliLogo1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import "../styles/components/header.css"; 
 
 const Header = () => {
   return (
