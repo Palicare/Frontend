@@ -14,9 +14,7 @@
     border-radius: 50%;
   }
 
-  h1 {
-    font-family: "Comic Sans MS", "Comic Sans", "Comic Neue";
-  }
+  
 
   .header-container {
     background-color: var(--main-blue);
