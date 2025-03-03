@@ -1,0 +1,18 @@
+.informationField-container {
+    background-color: var(--main-blue);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.informationField-title {
+    font-weight: bold;
+    margin: 0;
+}
+
+.informationField-divider {
+    border: none;
+    height: 1px;
+    color: var(--off-white);
+}
+
