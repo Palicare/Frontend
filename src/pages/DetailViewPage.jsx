@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import PersonalCard from "../components/PersonalCard";
+import Assistant from "./Assistant";
 import axios from "axios";
 
 const DetailViewPage = () => {
@@ -47,6 +48,7 @@ const DetailViewPage = () => {
         <div>
             <h1>Patient: {patient.firstName} {patient.lastName}</h1>
         </div>
+        <Assistant/>
         </>
     )
 };

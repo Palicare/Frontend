@@ -7,7 +7,7 @@ import RecordingIcon from "../Assets/Recording.svg";
 import Send from "../Assets/send.svg";
 import X from "../Assets/X.svg";
 
-export default function () {
+const Assistant =  () => {
   const { patientId } = useParams();
   const [patientData, setPatientData] = useState(null);
   useEffect(() => {
@@ -235,3 +235,5 @@ export default function () {
     </>
   );
 }
+
+export default Assistant;
