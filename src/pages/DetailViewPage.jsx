@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import PersonalCard from "../components/PersonalCard";
-import Assistant from "./Assistant";
+import Assistant from "../components/Assistant";
 import InformationField from "../components/InformationField"
 import axios from "axios";
 

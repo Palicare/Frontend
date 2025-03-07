@@ -27,7 +27,7 @@ const Assistant =  () => {
   }, [patientId]);
 
   const [messages, setMessages] = useState([
-    { id: 1, text: "Hallo wie kann ich die Helfen?", audioUrl: "" },
+    { role: "assistant", text: "Hallo wie kann ich die Helfen?", audioUrl: "" },
   ]);
 
   const [isRecording, setIsRecording] = useState(true);
@@ -44,37 +44,30 @@ const Assistant =  () => {
     }
   };
   const getLLMresponse = async (transcribedText) => {
-    // Systemanweisung für den Assistenten
-    const roleDescription = "Du bist ein Assistent, der in der Palliativabteilung arbeitet. " +
-                            "Du sollst dem Nutzer helfen, kulturelle Fragen zu beantworten.";
+    const jsonBody = JSON.stringify({
+        id: {patientId},
+        messages: [
+            ...messages.map(({ role, text }) => ({ role, content: text })), 
+            { role: "user", content: transcribedText } 
+        ]
+    });
 
-    // Konvertiere den Nachrichtenverlauf in eine JSON-ähnliche Struktur mit Rollen
-    const formattedMessages = messages.map(msg => 
-        msg.id % 2 === 0 ? `User: ${msg.text}` : `Assistant: ${msg.text}`
-    ).join("\n");
-
-    // Erstelle den finalen Text-Prompt für Ollama
-    const prompt = `${roleDescription}\n\n${formattedMessages}\nUser: ${transcribedText}\nAssistant:`;
 
     try {
-        const response = await fetch("http://localhost:11434/api/generate", {
+        const response = await fetch("http://localhost:8080/llm", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                model: "deepseek-r1:8b",
-                prompt: prompt, // Die gesamte Konversation als formatierter String
-                stream: false
-            })
+            body: jsonBody
         });
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data = await response.json();
-        return data.response; // Die generierte Antwort des LLMs
+        const data = await response.text();
+        return data // Die generierte Antwort des LLMs
     } catch (error) {
         console.error("Fehler beim Abrufen der LLM-Antwort:", error);
         return null;
@@ -82,7 +75,7 @@ const Assistant =  () => {
 };
 
 
-  const saveMessage = async () => {
+const saveMessage = async () => {
     const lastAudioUrl = await stopRecording();
 
     // Convert the audio file URL to a Blob
@@ -99,21 +92,21 @@ const Assistant =  () => {
     try {
       // Send audio file to FastAPI for transcription
       const transcriptionResponse = await fetch(
-        "http://127.0.0.1:5000/transcribe/",
+        'http://localhost:8080/stt',
         {
           method: "POST",
           body: formData,
         }
       );
 
-      const transcriptionData = await transcriptionResponse.json();
+      const transcriptionData = await transcriptionResponse.text();
       const transcribedText =
-        transcriptionData.transcription || "Transcription failed";
+        transcriptionData || "Transcription failed";
 
       setMessages((prevMessages) => [
         ...prevMessages,
         {
-          id: prevMessages.length + 1,
+          role: "user",
           text: transcribedText,
           audioUrl: lastAudioUrl,
         },
@@ -123,7 +116,7 @@ const Assistant =  () => {
       setMessages((prevMessages) => [
         ...prevMessages,
         {
-          id: prevMessages.length + 1,
+            role: "assistant",
           text: llmResponse,
           audioUrl: lastAudioUrl,
         },
@@ -197,8 +190,8 @@ const Assistant =  () => {
               <div
                 key={msg.id}
                 className={`text ${
-                  msg.id % 2 === 0 ? "humanText" : "chatbotText"
-                }`}
+                    msg.role === "user" ? "humanText" : "chatbotText"
+                  }`}
               >
                 <p>{msg.text}</p>
                 <audio controls>

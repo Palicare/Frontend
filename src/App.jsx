@@ -2,7 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Login from "./pages/LoginPage";
 import DetailViewPage from "./pages/DetailViewPage";
 import Patientenprofile from "./pages/Patientenprofile";
-import Assistant from "./pages/Assistant"
+
 
 export default function App() {
     return (
