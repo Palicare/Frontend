@@ -45,7 +45,7 @@ const Assistant =  () => {
   };
   const getLLMresponse = async (transcribedText) => {
     const jsonBody = JSON.stringify({
-        id: {patientId},
+        patientId,
         messages: [
             ...messages.map(({ role, text }) => ({ role, content: text })), 
             { role: "user", content: transcribedText } 
@@ -67,7 +67,9 @@ const Assistant =  () => {
         }
 
         const data = await response.text();
-        return data // Die generierte Antwort des LLMs
+        const cleanedData = data.replace(/<think>.*?<\/think>/gs, '');
+
+        return cleanedData // Die generierte Antwort des LLMs
     } catch (error) {
         console.error("Fehler beim Abrufen der LLM-Antwort:", error);
         return null;
