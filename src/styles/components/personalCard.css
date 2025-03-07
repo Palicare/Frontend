@@ -10,6 +10,8 @@
     border-radius: 10px;
     margin-bottom: 20px;
     border-bottom: 2px solid var(--main-blue);
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .profile-info{

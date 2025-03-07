@@ -11,7 +11,6 @@ export default function App() {
                 <Route path="/" element={<Login />} />
                 <Route path="/detailView/:patientId" element={<DetailViewPage/>}/>
                 <Route path="/patientenprofile" element={<Patientenprofile/>}/>
-                <Route path="/assistant/:patientId" element={<Assistant/>}/>
             </Routes>
         </Router>
     )
