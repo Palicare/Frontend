@@ -1,0 +1,108 @@
+html:has(.primary) {
+    background-color: var(--main-blue) !important;
+}
+
+
+div{
+    background-color: transparent;
+}
+
+body{
+    background-color: transparent;
+}
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
+
+.loginArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.inputField{
+    all: unset;
+    border-style: solid;
+    border-radius: 75px;
+    border-color: var(--off-white);
+    height: 80px;
+    width: 300px;
+    text-align: center;
+    color: var(--off-white);
+    font-size: 24px;
+    margin-top: 33px;
+
+}
+
+.inputField::placeholder{
+    color: var(--off-white);
+    font-size: 24px;
+}
+
+.inputField:focus {
+    border-color: var(--highlight-color);
+}
+
+.inputField:focus::placeholder {
+    opacity: 0; 
+}
+
+
+.inputField:focus {
+    caret-color: var(--off-white); 
+}
+
+.logoContainer {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+.logoContainer img {
+    width: 300px;
+    height: 79px;
+}
+
+.loginResetButtons {
+    margin-top: 5em ;
+    display: flex;
+    gap: 10px; 
+    justify-content: center;
+
+  }
+  
+
+  .pws-reset-button {
+    background-color: transparent;
+    border-style: none;
+    padding: 10px 20px; 
+    font-size: 16px;
+    text-align: center;
+    color: var(--off-white);
+  }
+  
+  .login-button {
+    background-color: var(--off-white);
+    border: solid 2px var(--main-blue); 
+    border-radius: 75px;
+    color: var(--main-blue);
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    width: 125px; 
+    height: 50px;
+    margin: 5px 0;
+  }

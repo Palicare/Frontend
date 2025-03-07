@@ -4,8 +4,7 @@ import DetailViewPage from "./pages/DetailViewPage";
 import Patientenprofile from "./pages/Patientenprofile";
 import Assistant from "./pages/Assistant"
 import AddUserPage from "./pages/AddUserPage";
-
-
+import CameraView from "./pages/CameraView"
 
 export default function App() {
     return (
@@ -16,6 +15,7 @@ export default function App() {
                 <Route path="/patientenprofile" element={<Patientenprofile/>}/>
                 <Route path="/assistant/:patientId" element={<Assistant/>}/>
                 <Route path="/adduser" element={<AddUserPage/>}/>                          
+                <Route path="/addUser/camera/:patientId" element={<CameraView/>}/>
             </Routes>
         </Router>
     )
