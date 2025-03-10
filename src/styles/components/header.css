@@ -1,42 +1,47 @@
 @import url("../defaultcolors.css");
 
 .logo {
-    height: 60px;
-  }
-  
-  .icon-border {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    border: 2px solid white;
-    border-radius: 50%;
-    background-color: var(--main-blue);
-    
-  }
+  height: 60px;
+}
 
-  .icon-border img {
-    width: 60%;
-    height: auto;
-  }
-  
+.icon-border {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: var(--main-blue);
+}
 
-  .icon-container {
-    background-color: var(--main-blue);
-    display: flex;
-    align-items: center;
-    
-  }
+.icon-border img {
+  width: 60%;
+  height: auto;
+}
 
-  
+.icon-container {
+  background-color: var(--main-blue);
+  display: flex;
+  align-items: center;
+}
 
-  .header-container {
-    background-color: var(--main-blue);
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-  }
+.header-container {
+  background-color: var(--main-blue);
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 

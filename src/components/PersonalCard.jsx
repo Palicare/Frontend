@@ -30,6 +30,15 @@ const PersonalCard = () => {
     }
   }, [patientId]);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0"); 
+    const month = String(date.getMonth() + 1).padStart(2, "0"); 
+    const year = date.getFullYear();
+  
+    return `${day}.${month}.${year}`;
+  };
+
   return (
     <div className="profile-container">
       <div className="profile-image">
@@ -60,10 +69,10 @@ const PersonalCard = () => {
             <strong>Geschlecht:</strong> {patientData?.gender || "N/A"}
           </p>
           <p>
-            <strong>Geburtsdatum:</strong> {patientData?.dob || "N/A"}
+            <strong>Geburtsdatum:</strong> {patientData?.birthDate ? formatDate(patientData?.birthDate) : "N/A"}
           </p>
           <p>
-            <strong>Notfallkontakt:</strong> {patientData?.emergencyContact || "N/A"}
+            <strong>Notfallkontakt:</strong> {patientData?.contact.firstName} {patientData?.contact.lastName}  ({patientData?.contact.relation})  
           </p>
           <p>
             <strong>Religion:</strong> {patientData?.religion || "N/A"}

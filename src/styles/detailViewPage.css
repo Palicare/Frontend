@@ -1,0 +1,45 @@
+.container {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.swipe-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.swipe-content {
+    display: flex;
+    width: 200%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.info-container, .assistant-container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    
+}
+
+.indicator {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: gray;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background-color: var(--main-blue);
+}
