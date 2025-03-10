@@ -85,7 +85,7 @@ const DetailViewPage = () => {
           animate={{
             transform: `translateX(${currentView === 1 ? "-50%" : "0%"})`,
           }}
-          transition={{ type: "spring", stiffness: 100 }}
+          transition={{ type: "spring", stiffness: 200, damping:20 }}
         >
           <div className="info-container">
             <InformationField title="Allergien" data={patientData.allergies} />
