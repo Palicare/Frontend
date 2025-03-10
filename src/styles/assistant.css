@@ -4,14 +4,16 @@
 .contentArea{
     margin-top: 5.8vh;
     margin-bottom:25vh;
+    height: 35vh;
+    
 }
 
 .lowerInteractionBar{
     background-color: var(--main-blue);
+    width: 100vw;
+    right: 0;
     position: fixed;
     bottom: 0;
-    left: 0;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,6 +81,7 @@ img{
     display: flex;
     flex-direction: column;
     width: 100%;
+    overflow: auto;
 }
 
 .text{
@@ -116,54 +119,4 @@ p{
     font-size: 16px;
     background-color: transparent;
     color: var(--off-white);
-}
-.profile-container p{
-    margin: 0;
-    color: var(--dark-blue);
-}
-
-.profile-container {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--main-blue);
-}
-
-.profile-info{
-    margin-left: 2em;
-}
-
-.profile-info-box{
-    width: 100%;
-    margin-right: 2em;
-}
-
-.profile-info-box-headline {
-    display: flex;
-    margin-left: 2em;
-    align-items: center;
-    gap: 4px;
-    border-bottom: 2px solid var(--main-blue);
-    width: 100%;
-}
-
-.profile-info-box-headline .left {
-    font-weight: bold;
-}
-
-.profile-info-box-headline .right {
-    display: flex;
-    align-items: center;
-    gap: 4px; 
-    padding-right: 0.5em;
-    margin-left: auto;
-}
-.profile-info p{
-    font-weight: 200;
-}
-
-.profile-image img{
-    border-radius: 20px;
 }

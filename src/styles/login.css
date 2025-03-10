@@ -1,7 +1,7 @@
-
-html{
+html:has(.primary) {
     background-color: var(--main-blue) !important;
 }
+
 
 div{
     background-color: transparent;

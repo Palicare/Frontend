@@ -14,6 +14,7 @@ export default function() {
     };
 
     return <>
+    <div className="primary">
     <div className="logoContainer">
         <img src={Logo} alt="Logo" className="logo" />
       </div>
@@ -30,6 +31,7 @@ export default function() {
             <button className="login-button" onClick={handleLogin}>Einloggen</button>
         </div>
       </div>
+    </div>
     </div>
     </>
 }
