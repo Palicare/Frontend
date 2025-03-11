@@ -1,7 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import "../styles/AddUserPage.css"; 
 import AddCamera from "../Assets/AddCamera.png";
 
 const BasicInforForm = ({patientData, setPatientData}) => {
+
+  const navigate = useNavigate(); 
+
     // 处理输入框变化
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -11,10 +15,15 @@ const BasicInforForm = ({patientData, setPatientData}) => {
       }));
     };  
 
+    const handleImageClick = () => {
+      // Navigiert zur Kamera-Seite
+      navigate(`/adduser/camera/${patientData.id}`);
+    };
+
   return (
         <div className="personal-data-container">         
           {/* Upload  upload-icon */}
-          <div className="image-upload">
+          <div className="image-upload" onClick={handleImageClick}>
             <img src={AddCamera} alt="Upload Image" className="image-upload" /> 
           </div>
 

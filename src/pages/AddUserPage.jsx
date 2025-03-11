@@ -19,7 +19,7 @@ const AddUserPage = () => {
     ernaehrungstyp: "",
     plegestufe: "",
     raumNumber:"",
-    foto:"",})
+    foto: null,})
   
   const [notfallData, setNotfallData] = useState({//2 Teil
     name: "",
