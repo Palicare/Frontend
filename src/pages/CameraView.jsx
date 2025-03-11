@@ -80,7 +80,6 @@ const FullScreenCamera = () => {
         ) : (
           <div className="actionButtonGroup">
             <button className="actionbutton" onClick={rejectImage}>Erneut versuchen</button>
-            <button className="recordButton passiv"></button>
             <button className="actionbutton">Hinzufügen</button>
           </div>
         )}
