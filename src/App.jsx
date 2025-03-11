@@ -3,6 +3,9 @@ import Login from "./pages/LoginPage";
 import DetailViewPage from "./pages/DetailViewPage";
 import Patientenprofile from "./pages/Patientenprofile";
 import Assistant from "./pages/Assistant"
+import AddUserPage from "./pages/AddUserPage";
+
+
 
 export default function App() {
     return (
@@ -12,6 +15,7 @@ export default function App() {
                 <Route path="/detailView/:patientId" element={<DetailViewPage/>}/>
                 <Route path="/patientenprofile" element={<Patientenprofile/>}/>
                 <Route path="/assistant/:patientId" element={<Assistant/>}/>
+                <Route path="/addUser" element={<AddUserPage/>}/>                          
             </Routes>
         </Router>
     )
