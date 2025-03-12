@@ -6,13 +6,14 @@ const MedicalInfoForm = ({medicalData, setMedicalData }) => {
 
     const [allergyInput, setAllergyInput] = useState("");
     const [symptomInput, setSymptomInput] = useState("");
+
   
     // handle change
     const handleChange = (event) => {
       const { name, value } = event.target;
-      if (name === "allergien") {
+      if (name === "allergies") {
         setAllergyInput(value);
-      } else if (name === "symptome") {
+      } else if (name === "symptoms") {
         setSymptomInput(value);
       }
     };
@@ -20,22 +21,19 @@ const MedicalInfoForm = ({medicalData, setMedicalData }) => {
   // Add Allergien
   const addAllergy = () => {
     if (allergyInput.trim()) {
-      const updatedAllergies = medicalData.allergien ? medicalData.allergien.split(", ") : [];
-      updatedAllergies.push(allergyInput.trim());
       setMedicalData((prevData) => ({
         ...prevData,
-        allergien: updatedAllergies.join(", "),
+        allergies: [...prevData.allergies, allergyInput.trim()] // ✅ 直接存入数组
       }));
-      setAllergyInput("");
+      setAllergyInput(""); // 清空输入框
     }
   };
 
   // remove Allergien
   const removeAllergy = (index) => {
-    const updatedAllergies = medicalData.allergien ? medicalData.allergien.split(", ").filter((_, i) => i !== index) : [];
     setMedicalData((prevData) => ({
       ...prevData,
-      allergien: updatedAllergies.length > 0 ? updatedAllergies.join(", ") : "",
+      allergies: prevData.allergies.filter((_, i) => i !== index) // ✅ 过滤数组
     }));
   };
 
@@ -43,22 +41,19 @@ const MedicalInfoForm = ({medicalData, setMedicalData }) => {
    // Add Symptome
   const addSymptom = () => {
     if (symptomInput.trim()) {
-      const updatedSymptoms = medicalData.symptome ? medicalData.symptome.split(", ") : [];
-      updatedSymptoms.push(symptomInput.trim());
       setMedicalData((prevData) => ({
         ...prevData,
-        symptome: updatedSymptoms.join(", "),
+        symptoms: [...prevData.symptoms, symptomInput.trim()] // ✅ 直接存入数组
       }));
-      setSymptomInput("");
+      setSymptomInput(""); // 清空输入框
     }
   };
 
-  // remove Symptome
+  // 移除症状
   const removeSymptom = (index) => {
-    const updatedSymptoms = medicalData.symptome ? medicalData.symptome.split(", ").filter((_, i) => i !== index) : [];
     setMedicalData((prevData) => ({
       ...prevData,
-      symptome: updatedSymptoms.length > 0 ? updatedSymptoms.join(", ") : "",
+      symptoms: prevData.symptoms.filter((_, i) => i !== index) // ✅ 过滤数组
     }));
   };
 
@@ -74,24 +69,22 @@ const MedicalInfoForm = ({medicalData, setMedicalData }) => {
           <div className="medical-input-group">
             <input
               type="text"
-              name="allergien"
-              value={allergyInput}
+              name="allergies"
+              value={allergyInput|| ""}
               onChange={handleChange}
               placeholder="Allergie eingeben"
               className="medical-input"
             />
             <button onClick={addAllergy} className="medical-add-button">+</button>
           </div>
-          {medicalData.allergien && medicalData.allergien.trim() !== "" && (
-          <ul className="medical-display">
-            {medicalData.allergien.split(", ").map((allergy, index) => (
-              allergy.trim() !== "" && (
+          {medicalData.allergies.length > 0 && (
+            <ul className="medical-display">
+              {medicalData.allergies.map((allergy, index) => (
                 <span key={index} className="medical-item">
-                {allergy} <button onClick={() => removeAllergy(index)} className="medical-remove-button">x</button>
-              </span>
-              )
-            ))}
-          </ul>
+                  {allergy} <button onClick={() => removeAllergy(index)} className="medical-remove-button">x</button>
+                </span>
+              ))}
+            </ul>
         )}
         </div>
   
@@ -100,25 +93,23 @@ const MedicalInfoForm = ({medicalData, setMedicalData }) => {
           <div className="medical-input-group">
             <input
               type="text"
-              name="symptome"
-              value={symptomInput}
+              name="symptoms"
+              value={symptomInput || ""}
               onChange={handleChange}
               placeholder="Symptome eingeben"
               className="medical-input"
             />
             <button onClick={addSymptom} className="medical-add-button">+</button>
           </div>
-          {medicalData.symptome && medicalData.symptome.trim() !== "" && (
-          <ul className="medical-display">
-            {medicalData.symptome.split(", ").map((symptom, index) => (
-              symptom.trim() !== "" && (
+          {medicalData.symptoms.length > 0 && (
+            <ul className="medical-display">
+              {medicalData.symptoms.map((symptom, index) => (
                 <span key={index} className="medical-item">
-                {symptom} <button onClick={() => removeSymptom(index)} className="medical-remove-button">x</button>
-              </span>
-              )
-            ))}
-          </ul>
-        )}
+                  {symptom} <button onClick={() => removeSymptom(index)} className="medical-remove-button">x</button>
+                </span>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
 

@@ -15,7 +15,7 @@ export default function App() {
                 <Route path="/detailView/:patientId" element={<DetailViewPage/>}/>
                 <Route path="/patientenprofile" element={<Patientenprofile/>}/>
                 <Route path="/assistant/:patientId" element={<Assistant/>}/>
-                <Route path="/addUser" element={<AddUserPage/>}/>                          
+                <Route path="/adduser" element={<AddUserPage/>}/>                          
             </Routes>
         </Router>
     )

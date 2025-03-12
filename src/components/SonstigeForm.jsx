@@ -21,10 +21,10 @@ const SonstigeForm = ({ sonstigeData, setSonstigeData }) => {
                 <div className="form-grid">
                     <div className="form-group">
                         <label className=".form-group label">Zusatzangaben:</label>
-                        <input className=".form-group input"type="text" placeholder="Zusätzliche Informationen eingeben" name="zusatz" value={ sonstigeData.zusatz} onChange={handleChange} />
+                        <input className=".form-group input"type="text" placeholder="Zusätzliche Informationen eingeben" name="zusatz" value={ sonstigeData.zusatz||""} onChange={handleChange} />
                     </div>
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <label className=".form-group label">Vorlieben:</label>
                         <input type="text" placeholder="Vorlieben eingeben"  name="vorliebe"  value={sonstigeData.vorliebe} onChange={handleChange} />
                     </div>
@@ -32,7 +32,7 @@ const SonstigeForm = ({ sonstigeData, setSonstigeData }) => {
                     <div className="form-group">
                         <label className=".form-group label">Abneigungen:</label>     
                         <input  type="text" placeholder="Abneigungen eingeben" name="abneigung"  value={sonstigeData.abneigung} onChange={handleChange}  />
-                    </div>
+                    </div> */}
 
      
                 </div>
