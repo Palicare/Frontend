@@ -131,11 +131,13 @@
 
 .emergency-contact {
   margin-top: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
-.contact-label {
-  font-weight: 500;
+.emergency-contact .contact-tel {
+  padding-top: 5px;
+  font-weight: bold;
+  font-size: 0.8rem;
 }
 
 .contact-name {

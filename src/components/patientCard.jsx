@@ -138,6 +138,7 @@ const PatientCard = ({ patient, id }) => {
         ? `${patientData.contact.firstName} ${patientData.contact.lastName}`
         : "Not specified",
       relation: patientData.contact?.relation || "",
+      tel: patientData.contact?.phone || "+49 XXXXX",
     },
   };
 
@@ -197,9 +198,15 @@ const PatientCard = ({ patient, id }) => {
               <div className="contact-label">Notfallkontakt:</div>
               <div className="contact-name">{displayData.emergency.name}</div>
               {displayData.emergency.relation && (
-                <div className="contact-relation">
-                  ({displayData.emergency.relation})
-                </div>
+                <>
+                  <div className="contact-relation">
+                    ({displayData.emergency.relation})
+                  </div>
+                  <div className="contact-tel">
+                    {" "}
+                    {displayData.emergency.tel}
+                  </div>
+                </>
               )}
             </div>
           </div>
