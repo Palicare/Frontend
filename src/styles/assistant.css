@@ -76,13 +76,24 @@ img{
 }
 
 
-.chatArea{
+.chatArea {
     margin-top: 10em;
     display: flex;
     flex-direction: column;
     width: 100%;
-    overflow: auto;
+    height: 35vh; /* Fixed height */
+    overflow-y: scroll; /* Allows scrolling */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+    flex-grow: 1;
+    scrollbar-width: none; /* Firefox: Hides scrollbar */
+    -ms-overflow-style: none; /* IE/Edge: Hides scrollbar */
 }
+
+.chatArea::-webkit-scrollbar {
+    display: none; /* Chrome, Safari: Hides scrollbar */
+}
+
+
 
 .text{
     border-radius: 10px;

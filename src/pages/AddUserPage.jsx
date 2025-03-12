@@ -1,5 +1,5 @@
 import BasicInforForm from "../components/BasicInfoForm.jsx";
-import HeaderAddUser from "../components/HeaderAddUser.jsx"; 
+import Header from "../components/Header.jsx"; 
 import NotfallkontaktForm from "../components/NotfallkontaktForm.jsx";
 import PalliativepflegeForm from "../components/PalliativpflegeForm.jsx";
 import MedicalInfoForm from "../components/MedicalInfoForm.jsx";
@@ -152,7 +152,7 @@ const AddUserPage = () => {
 
   return (
     <>
-      <HeaderAddUser />
+      <Header />
       <br />
       <BasicInforForm patientData={patientData} setPatientData={setPatientData} />
       <NotfallkontaktForm notfallData={notfallData} setNotfallData={setNotfallData} />

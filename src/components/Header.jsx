@@ -20,7 +20,7 @@ const Header = ({ isHomeScreen }) => {
         )}
 
         {isHomeScreen && (
-          <button onClick={() => navigate()} className="icon-button">
+          <button onClick={() => navigate("/addUser")} className="icon-button">
           <div className="icon-border">
             <img src={AddPatient} alt="Add Patient" />
           </div>

@@ -10,6 +10,7 @@ import X from "../Assets/X.svg";
 const Assistant = () => {
   const { patientId } = useParams();
   const [patientData, setPatientData] = useState(null);
+  const chatAreaRef = useRef(null);
 
   useEffect(() => {
     const getPatientData = async () => {
@@ -30,6 +31,12 @@ const Assistant = () => {
   const [messages, setMessages] = useState([
     { role: "assistant", text: "Hallo wie kann ich die Helfen?", audioUrl: "" },
   ]);
+
+  useEffect(() => {
+    if (chatAreaRef.current) {
+      chatAreaRef.current.scrollTop = chatAreaRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const [isRecording, setIsRecording] = useState(true);
   const [audioUrls, setAudioUrls] = useState([]);
@@ -224,7 +231,7 @@ const Assistant = () => {
       <div className="contentArea">
         <div className="chat-area">
           <h1>New Chat - Patient {patientId}</h1>
-          <div className="chatArea">
+          <div className="chatArea" ref={chatAreaRef}>
             {messages.map((msg) => (
               <div
                 key={msg.id}

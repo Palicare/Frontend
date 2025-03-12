@@ -140,7 +140,7 @@ const Patientenprofile = () => {
 
   return (
     <div className="patientenprofile-container">
-      <Header />
+      <Header isHomeScreen={true} /> 
       <div className="content-container">
         {/* <div className="page-title">
           <h1>Patientenprofile</h1>
