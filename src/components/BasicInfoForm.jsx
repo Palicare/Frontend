@@ -5,6 +5,7 @@ const BasicInforForm = ({patientData, setPatientData}) => {
     // 处理输入框变化
     const handleChange = (e) => {
       const { name, value } = e.target;
+
       setPatientData((prevData) => ({
         ...prevData,
         [name]: value,
@@ -43,7 +44,7 @@ const BasicInforForm = ({patientData, setPatientData}) => {
 
               <div className="form-group">
                 <label className=".form-group label">Geburtsdatum:</label>     
-                <input  type="text" placeholder="jjj.mm.tt" name="birthDate" value={patientData.birthDate|| ""} onChange={handleChange} />
+                <input  type="date"  name="birthDate" value={patientData.birthDate|| ""} onChange={handleChange} />
               </div>
 
               <div className="form-group">
@@ -95,17 +96,17 @@ const BasicInforForm = ({patientData, setPatientData}) => {
                 <label>Plegestufe:</label>
                 <select name="careLevel" value={patientData.careLevel} onChange={handleChange}>
                 <option value="" disabled hidden>Bitte wählen...</option>
-                <option>1</option>
-                <option>2 </option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option value="1">1</option>
+                <option value="2">2 </option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5"> 5</option>
                 </select>
               </div>
 
               <div className="form-group">
                 <label className=".form-group label">Raumnummer:</label>
-                <input type="text" placeholder="Raumnummer" name="roomNumber" value={patientData.roomNumber|| ""} onChange={handleChange}  />
+                <input type="text" placeholder="Raumnummer eingeben" name="roomNumber" value={patientData.roomNumber|| ""} onChange={handleChange}  />
               </div> 
 
 

@@ -31,7 +31,7 @@ const NotfallkontaktForm = ({ notfallData, setNotfallData }) => {
 
                     <div className="form-group">
                         <label className=".form-group label">Geburtsdatum:</label>     
-                        <input  type="text" placeholder="jjjj.mm.tt" name="birthDate"  value={notfallData.birthDate|| ""} onChange={handleChange}  />
+                        <input  type="date" name="birthDate"  value={notfallData.birthDate|| ""} onChange={handleChange}  />
                     </div>
 
                     <div className="form-group">
