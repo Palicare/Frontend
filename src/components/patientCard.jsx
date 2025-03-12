@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/components/PatientCard.css";
+import API_BASE_URL from "../config";
 
 // room icon
 const RoomIcon = () => (
@@ -51,7 +52,7 @@ const PatientCard = ({ patient, id }) => {
     const fetchPatientData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8080/patients/${id}`);
+        const response = await fetch(`${API_BASE_URL}/patients/${id}`);
 
         if (!response.ok) {
           throw new Error(`Failed to fetch patient data: ${response.status}`);
@@ -119,8 +120,8 @@ const PatientCard = ({ patient, id }) => {
 
   // profile picture
   const profilePictureUrl = patientId
-    ? `http://localhost:8080/patients/${patientId}/profile-picture`
-    : "./src/Assets/DefaultUser.png";
+  ? `${API_BASE_URL}/patients/${patientId}/profile-picture`
+  : "./src/Assets/DefaultUser.png";
 
   const displayData = {
     name:

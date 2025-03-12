@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../styles/components/personalCard.css";
+import API_BASE_URL from "../config";
 
 import DefaultUserIcon from "../Assets/DefaultUser.png"
 import RoomIcon from "../Assets/Room.svg"
@@ -14,7 +15,8 @@ const PersonalCard = () => {
   useEffect(() => {
     const getPatientData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/patients/${patientId}`);
+        const response = await fetch(`${API_BASE_URL}/patients/${patientId}`);
+
         if (!response.ok) {
           throw new Error("Failed to fetch patient data");
         }

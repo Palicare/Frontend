@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import API_BASE_URL from "../config";
 import "../styles/assistant.css";
 import MicrophoneIcon from "../Assets/Microphone.svg";
 import RecordingIcon from "../Assets/Recording.svg";
@@ -15,9 +15,7 @@ const Assistant = () => {
   useEffect(() => {
     const getPatientData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8080/patients/${patientId}`
-        );
+        const response = await fetch(`${API_BASE_URL}/patients/${patientId}`);
         const data = await response.json();
         setPatientData(data);
       } catch (error) {
@@ -72,14 +70,14 @@ const Assistant = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:8080/llm", {
+      const response = await fetch(`${API_BASE_URL}/llm`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: jsonBody,
       });
-
+      
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -96,7 +94,7 @@ const Assistant = () => {
 
   const getTextToSpeach = async (text) => {
     try {
-      const response = await fetch("http://localhost:8080/tts", {
+      const response = await fetch(`${API_BASE_URL}/tts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -140,10 +138,10 @@ const Assistant = () => {
 
     try {
       // Send audio file to FastAPI for transcription
-      const transcriptionResponse = await fetch("http://localhost:8080/stt", {
+      const transcriptionResponse = await fetch(`${API_BASE_URL}/stt`, {
         method: "POST",
         body: formData,
-      });
+      });      
 
       const transcriptionData = await transcriptionResponse.text();
       const transcribedText = transcriptionData || "Transcription failed";
@@ -230,7 +228,7 @@ const Assistant = () => {
     <>
       <div className="contentArea">
         <div className="chat-area">
-          <h1>New Chat - Patient {patientId}</h1>
+        <h1 className="chat-title">New Chat - Patient {patientId}</h1>
           <div className="chatArea" ref={chatAreaRef}>
             {messages.map((msg) => (
               <div

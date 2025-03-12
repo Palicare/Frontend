@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config";
 import BasicInforForm from "../components/BasicInfoForm.jsx";
 import Header from "../components/Header.jsx"; 
 import NotfallkontaktForm from "../components/NotfallkontaktForm.jsx";
@@ -92,7 +93,7 @@ const AddUserPage = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/patients", {
+      const response = await fetch(`${API_BASE_URL}/patients`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(patientFormData)
@@ -114,7 +115,7 @@ const AddUserPage = () => {
         const imageFormData = new FormData();
         imageFormData.append("file", patientData.profileImage);
 
-        const imageResponse = await fetch(`http://localhost:8080/patients/${patientId}/profile-picture`, {
+        const imageResponse = await fetch(`${API_BASE_URL}/patients/${patientId}/profile-picture`, {
           method: "POST",
           body: imageFormData
         });

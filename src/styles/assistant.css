@@ -2,8 +2,8 @@
 @import url("defaultcolors.css");
 
 .contentArea{
-    margin-top: 5.8vh;
-    margin-bottom:25vh;
+    margin-top: 0.2em;
+    margin-bottom:auto;
     height: 35vh;
     
 }
@@ -76,8 +76,15 @@ img{
 }
 
 
+.chat-title {
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+
 .chatArea {
-    margin-top: 10em;
+    margin-top: 2em;
     display: flex;
     flex-direction: column;
     width: 100%;

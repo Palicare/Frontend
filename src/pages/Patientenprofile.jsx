@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import API_BASE_URL from "../config";
 import Header from "../components/Header.jsx";
 import PatientCard from "../components/patientCard.jsx";
 import "../styles/patientenProfile.css";
@@ -22,10 +23,10 @@ const Patientenprofile = () => {
       setLoading(true);
 
       const endpoint = searchTerm
-        ? `http://localhost:8080/patients/search?query=${encodeURIComponent(
+        ? `${API_BASE_URL}/patients/search?query=${encodeURIComponent(
             searchTerm
           )}&page=${currentPage}&size=${pageSize}`
-        : `http://localhost:8080/patients?page=${currentPage}&size=${pageSize}`;
+        : `${API_BASE_URL}/patients?page=${currentPage}&size=${pageSize}`;
 
       const response = await fetch(endpoint);
 
@@ -140,7 +141,7 @@ const Patientenprofile = () => {
 
   return (
     <div className="patientenprofile-container">
-      <Header isHomeScreen={true} /> 
+      <Header isHomeScreen={true} />
       <div className="content-container">
         {/* <div className="page-title">
           <h1>Patientenprofile</h1>
