@@ -56,8 +56,14 @@ const FullScreenCamera = () => {
       }
 
       context.drawImage(video, startX, startY, cropWidth, cropHeight, 0, 0, 677, 677);
-      const imageData = canvas.toDataURL("image/png");
-      setCapturedImage(imageData);
+
+      // Convert canvas to Blob and create a File object
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const file = new File([blob], "profile-picture.png", { type: "image/png" });
+          setCapturedImage(file); // Store File object instead of Base64
+        }
+      }, "image/png");
     }
   };
 
@@ -66,9 +72,9 @@ const FullScreenCamera = () => {
     startCamera();
   };
 
-  // Function to pass the captured image back to BasicInforForm
+  // Function to pass the captured File object back to BasicInfoForm
   const saveImageAndGoBack = () => {
-    navigate("/adduser", { state: { capturedImage } }); // Pass image via navigation state
+    navigate("/adduser", { state: { capturedImage } }); // Pass File object via navigation state
   };
 
   return (
@@ -78,7 +84,7 @@ const FullScreenCamera = () => {
         {!capturedImage ? (
           <video className="camera" ref={videoRef} autoPlay playsInline width="677" height="677" />
         ) : (
-          <img src={capturedImage} alt="Captured" />
+          <img src={URL.createObjectURL(capturedImage)} alt="Captured" />
         )}
       </div>
       <div className="buttonContainer">
