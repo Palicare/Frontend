@@ -1,0 +1,187 @@
+
+.linie-divider {
+  border: none;
+  height: 1px;
+  color: var(--off-white);
+}
+
+/* Header 整体样式 */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 确保左中右对齐 */
+    background-color: #3B7E9B;
+    padding: 10px 20px;
+    height: 60px;
+    width: 100%;
+  }
+  
+  /* 统一所有图标的样式 */
+  .icon {
+    position: relative;
+    z-index: 10; /* 确保它在最前面 */
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+  }
+  
+  /* 左侧图标组 */
+  .icon-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 调整间距 */
+    background-color: transparent;
+  }
+  
+  /* 图标的白色圆形边框 */
+  .icon-border {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: 2px ;
+    
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  
+  /* 中间 Logo 区域 */
+  .logo-container {
+    flex-grow: 1; /* 让 Logo 居中对齐 */
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+  }  
+  .logo {
+    height: 40px;
+    max-width: 100%;
+  }
+  
+/* 让右侧 profile-icon 的外层 div 也有白色圆形边框 */
+.profile-border {
+    display: flex;
+    align-items: center;   
+    width: 50px;  /* 让它和左侧 .icon-border 一样大 */
+    height: 50px;   
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: transparent;
+} 
+/* 用户头像的大小，确保和左侧图标匹配 */
+.profile-icon {
+    width: 32px;
+    height: 32px;
+}
+
+
+/* BasicInForm.CSS */
+/* 主容器：水平排列 图片 + 表单 */
+.personal-data-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background-color: #F8F9FA;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* 图片上传区域 */
+.image-upload {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #3B7E9B;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.upload-icon {
+  width: 100%;
+  height: auto;
+}
+
+/* 右侧表单 */
+.personal-data-form {
+  flex-grow: 1;
+  background-color: #3B7E9B;
+  padding: 15px;
+  border-radius: 10px;
+  color:  #F8F9FA;
+  width: 100%;
+}
+
+/* 标题 */
+.form-title {
+  background-color: transparent !important;  /* 让背景透明 */
+  margin-bottom: 10px;
+  font-size: 18px;
+  position: relative;
+  z-index: 10;
+}
+
+/* 表单网格布局 */
+.form-grid {
+  background-color: transparent !important;  /* 让背景透明 */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 列布局 */
+  gap: 15px;
+}
+
+/* 让 label 在上，input 在下 */
+.form-group {
+  background-color: transparent !important;  /* 让背景透明 */
+  display: flex;
+  flex-direction: column; /* 让 label 在上，input 在下 */
+}
+.form-group label {
+  display: block; /* 让 label 独占一行，确保它在输入框上方 */
+  font-size: 14px;
+  font-weight: bold;
+  color: #F8F9FA;
+  margin-bottom: 5px; /* 让 label 和 input 之间有间距 */
+  background-color: transparent !important; /* 避免背景遮住 label */
+  position: relative;
+  z-index: 10;
+}
+/* 统一输入框、选择框样式 */
+.form-group input, 
+.form-group select {
+  padding: 8px;
+  max-width: 300px; /* 限制最大宽度，避免太长 */
+  box-sizing: border-box; /* 避免 padding 影响宽度 */
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+}
+
+/* 日期输入框带图标 */
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+}
+
+.input-group input {
+  flex-grow: 1;
+}
+
+.date-icon {
+  padding-left: 5px;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+
+/* NotFallKontaktForm */
+/* NotFallKontaktForm */
+
+
+

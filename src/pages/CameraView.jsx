@@ -1,108 +1,105 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import "../styles/cameraView.css";
 import Header from "../components/Header";
 
-export default function CameraView() {
-    const videoRef = useRef(null);
-    const canvasRef = useRef(null);
-    const [capturedImage, setCapturedImage] = useState(null);
+const FullScreenCamera = () => {
+  const videoRef = useRef(null);
+  const navigate = useNavigate(); // React Router navigation
+  const [capturedImage, setCapturedImage] = useState(null);
 
-    // Kamera starten und live-Video anzeigen
-    useEffect(() => {
-        startCamera();
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (error) {
+      console.error("Error accessing camera:", error);
+    }
+  };
 
-        // Verlassen der Seite
-        return () => {
-            stopCamera();
-        };
-    }, []);
+  useEffect(() => {
+    startCamera();
+    return () => {
+      if (videoRef.current && videoRef.current.srcObject) {
+        const stream = videoRef.current.srcObject;
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, []);
 
-    const startCamera = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            if (videoRef.current) {
-                videoRef.current.srcObject = stream;
-            }
-        } catch (error) {
-            console.error("Error accessing camera:", error);
+  const captureImage = () => {
+    if (videoRef.current) {
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      const video = videoRef.current;
+      const videoWidth = video.videoWidth;
+      const videoHeight = video.videoHeight;
+
+      canvas.width = 677;
+      canvas.height = 677;
+
+      const aspectRatio = videoWidth / videoHeight;
+      let cropWidth, cropHeight, startX, startY;
+
+      if (aspectRatio > 1) {
+        cropHeight = videoHeight;
+        cropWidth = videoHeight;
+        startX = (videoWidth - cropWidth) / 2;
+        startY = 0;
+      } else {
+        cropWidth = videoWidth;
+        cropHeight = videoWidth;
+        startX = 0;
+        startY = (videoHeight - cropHeight) / 2;
+      }
+
+      context.drawImage(video, startX, startY, cropWidth, cropHeight, 0, 0, 677, 677);
+
+      // Convert canvas to Blob and create a File object
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const file = new File([blob], "profile-picture.png", { type: "image/png" });
+          setCapturedImage(file); // Store File object instead of Base64
         }
-    };
+      }, "image/png");
+    }
+  };
 
-    const stopCamera = () => {
-        const stream = videoRef.current?.srcObject;
-        if (stream) {
-            const tracks = stream.getTracks();
-            tracks.forEach(track => track.stop());
-            videoRef.current.srcObject = null;
-        }
-    };
+  const rejectImage = () => {
+    setCapturedImage(null);
+    startCamera();
+  };
 
-    const captureImage = () => {
-        const canvas = canvasRef.current;
-        const video = videoRef.current;
-        if (canvas && video) {
-            const context = canvas.getContext("2d");
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            setCapturedImage(canvas.toDataURL("image/png"));
-            stopCamera(); // Kamera stoppen, nachdem das Bild aufgenommen wurde
-        }
-    };
+  // Function to pass the captured File object back to BasicInfoForm
+  const saveImageAndGoBack = () => {
+    navigate("/adduser", { state: { capturedImage } }); // Pass File object via navigation state
+  };
 
-    const deleteImage = () => {
-        setCapturedImage(null);
-        startCamera(); // Kamera nach dem Löschen des Bildes neu starten
-    };
+  return (
+    <div>
+      <Header />
+      <div className="cameraFeed">
+        {!capturedImage ? (
+          <video className="camera" ref={videoRef} autoPlay playsInline width="677" height="677" />
+        ) : (
+          <img src={URL.createObjectURL(capturedImage)} alt="Captured" />
+        )}
+      </div>
+      <div className="buttonContainer">
+        {!capturedImage ? (
+          <button className="recordButton active" onClick={captureImage}></button>
+        ) : (
+          <div className="actionButtonGroup">
+            <button className="actionbutton" onClick={rejectImage}>Erneut versuchen</button>
+            <button className="recordButton passiv"></button>
+            <button className="actionbutton" onClick={saveImageAndGoBack}>Hinzufügen</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
-    const saveImage = () => {
-
-        let imageIndex = localStorage.getItem('imageIndex');
-        imageIndex = imageIndex ? parseInt(imageIndex, 10) : 1;
-    
-        const imageName = `new${imageIndex}.png`;
-    
-        const link = document.createElement("a");
-        link.href = capturedImage; 
-        link.download = imageName;
-        link.click();
-    
-        localStorage.setItem('imageIndex', imageIndex + 1);
-    };
-
-    return (
-        <>
-            <Header />
-            <div className="camera-container flex flex-col items-center p-4">
-                {/* Live-Video direkt anzeigen*/}
-                <video ref={videoRef} autoPlay className="w-full max-w-md mt-4" />
-
-                {!capturedImage ? (
-                    <>
-                        <button 
-                            onClick={captureImage} 
-                            className="px-4 py-2 bg-green-500 text-white rounded-lg mt-4">
-                            Bild aufnehmen
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        {/* Zeigt das aufgenommene Bild */}
-                        <img src={capturedImage} alt="Captured" className="w-full max-w-md mt-4" />
-                        <div className="button-container flex gap-4 mt-4">
-                            <button 
-                                onClick={saveImage} 
-                                className="px-4 py-2 bg-blue-500 text-white rounded-lg">
-                                Bild speichern
-                            </button>
-                            <button 
-                                onClick={deleteImage} 
-                                className="px-4 py-2 bg-red-500 text-white rounded-lg">
-                                Bild löschen
-                            </button>
-                        </div>
-                    </>
-                )}
-            </div>
-        </>
-    );
-}
+export default FullScreenCamera;
