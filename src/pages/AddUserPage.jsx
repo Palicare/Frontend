@@ -20,7 +20,7 @@ const AddUserPage = () => {
 
   // Load state from sessionStorage or use default values
   const [patientData, setPatientData] = useState(() => loadStoredData("patientData", {
-    firstName: "", lastName: "", nationality: "", birthdate: "",
+    firstName: "", lastName: "", nationality: "", birthDate: "",
     gender: "", religion: "", diet: "", carelevel: "", roomNumber: "", profileImage: ""
   }));
 
@@ -62,7 +62,7 @@ const AddUserPage = () => {
 
       // Also reset local state
       setPatientData({
-        firstName: "", lastName: "", nationality: "", birthdate: "",
+        firstName: "", lastName: "", nationality: "", birthDate: "",
         gender: "", religion: "", diet: "", carelevel: "", roomNumber: "", profileImage: ""
       });
 
@@ -79,7 +79,7 @@ const AddUserPage = () => {
       firstName: patientData.firstName,
       lastName: patientData.lastName,
       nationality: patientData.nationality,
-      birthdate: patientData.birthdate,
+      birthDate: patientData.birthDate,
       gender: patientData.gender,
       religion: patientData.religion,
       diet: patientData.diet,
@@ -108,6 +108,8 @@ const AddUserPage = () => {
       const patientId = patientDataResponse.id;
       console.log("Neuer Patient ID:", patientId);
       console.log("Gesendete Patientendaten:", patientFormData);
+      console.log("Patient Birth Date:", patientDataResponse.birthDate);
+      console.log()
 
       // If an image was taken, upload it
       if (patientData.profileImage) {
@@ -135,7 +137,7 @@ const AddUserPage = () => {
       sessionStorage.removeItem("sonstigeData");
 
       setPatientData({
-        firstName: "", lastName: "", nationality: "", birthdate: "",
+        firstName: "", lastName: "", nationality: "", birthDate: "",
         gender: "", religion: "", diet: "", carelevel: "", roomNumber: "", profileImage: ""
       });
 

@@ -5,9 +5,10 @@ const NotfallkontaktForm = ({ notfallData, setNotfallData }) => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
+        const formattedValue = name === "birthDate" ? new Date(value).toISOString().split("T")[0] : value;
         setNotfallData((prevData) => ({
-            ...prevData,
-            [name]: value,
+          ...prevData,
+          [name]: formattedValue,
         }));
     };
     

@@ -26,9 +26,11 @@ const BasicInforForm = ({ patientData, setPatientData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // Behandlung des Geburtsdatums, um sicherzustellen, dass es im Format JJJJ-MM-TT vorliegt
+    const formattedValue = name === "birthDate" ? new Date(value).toISOString().split("T")[0] : value;
     setPatientData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: formattedValue,
     }));
   };
 
