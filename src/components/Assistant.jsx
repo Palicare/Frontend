@@ -7,9 +7,10 @@ import RecordingIcon from "../Assets/Recording.svg";
 import Send from "../Assets/send.svg";
 import X from "../Assets/X.svg";
 
-const Assistant =  () => {
+const Assistant = () => {
   const { patientId } = useParams();
   const [patientData, setPatientData] = useState(null);
+
   useEffect(() => {
     const getPatientData = async () => {
       try {
@@ -35,6 +36,17 @@ const Assistant =  () => {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
+  useEffect(() => {
+    if (messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      if (lastMessage.role === "assistant" && lastMessage.audioUrl) {
+        const audio = new Audio(lastMessage.audioUrl);
+        audio.playbackRate = 1.25; // Adjust this value for faster/slower speed
+        audio.play();
+      }
+    }
+  }, [messages]);
+
   const toggleButton = () => {
     setIsRecording((prevState) => !prevState);
     if (isRecording) {
@@ -45,39 +57,67 @@ const Assistant =  () => {
   };
   const getLLMresponse = async (transcribedText) => {
     const jsonBody = JSON.stringify({
-        patientId,
-        messages: [
-            ...messages.map(({ role, text }) => ({ role, content: text })), 
-            { role: "user", content: transcribedText } 
-        ]
+      patientId,
+      messages: [
+        ...messages.map(({ role, text }) => ({ role, content: text })),
+        { role: "user", content: transcribedText },
+      ],
     });
 
-
     try {
-        const response = await fetch("http://localhost:8080/llm", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: jsonBody
-        });
+      const response = await fetch("http://localhost:8080/llm", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonBody,
+      });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
-        const data = await response.text();
-        const cleanedData = data.replace(/<think>.*?<\/think>/gs, '');
+      const data = await response.text();
+      const cleanedData = data.replace(/<think>.*?<\/think>/gs, "");
 
-        return cleanedData // Die generierte Antwort des LLMs
+      return cleanedData; // Die generierte Antwort des LLMs
     } catch (error) {
-        console.error("Fehler beim Abrufen der LLM-Antwort:", error);
-        return null;
+      console.error("Fehler beim Abrufen der LLM-Antwort:", error);
+      return null;
     }
-};
+  };
 
+  const getTextToSpeach = async (text) => {
+    try {
+      const response = await fetch("http://localhost:8080/tts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "*/*",
+        },
+        body: JSON.stringify(
+          text
+            .replace(/^\s+/gm, "") // Remove leading spaces from each line
+            .replace(/\n{2,}/g, "\n") // Replace multiple newlines with a single newline
+            .trim()
+        ),
+      });
 
-const saveMessage = async () => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const audioBlob = await response.blob(); // Convert response to a Blob
+      const audioUrl = URL.createObjectURL(audioBlob); // Create a URL for playback
+
+      return audioUrl;
+    } catch (error) {
+      console.error("Error generating text-to-speech audio:", error);
+      return null;
+    }
+  };
+
+  const saveMessage = async () => {
     const lastAudioUrl = await stopRecording();
 
     // Convert the audio file URL to a Blob
@@ -93,17 +133,13 @@ const saveMessage = async () => {
 
     try {
       // Send audio file to FastAPI for transcription
-      const transcriptionResponse = await fetch(
-        'http://localhost:8080/stt',
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const transcriptionResponse = await fetch("http://localhost:8080/stt", {
+        method: "POST",
+        body: formData,
+      });
 
       const transcriptionData = await transcriptionResponse.text();
-      const transcribedText =
-        transcriptionData || "Transcription failed";
+      const transcribedText = transcriptionData || "Transcription failed";
 
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -115,12 +151,14 @@ const saveMessage = async () => {
       ]);
 
       const llmResponse = await getLLMresponse(transcribedText);
+      const ttsResponse = await getTextToSpeach(llmResponse);
+
       setMessages((prevMessages) => [
         ...prevMessages,
         {
-            role: "assistant",
+          role: "assistant",
           text: llmResponse,
-          audioUrl: lastAudioUrl,
+          audioUrl: ttsResponse,
         },
       ]);
     } catch (error) {
@@ -184,7 +222,6 @@ const saveMessage = async () => {
   return (
     <>
       <div className="contentArea">
-
         <div className="chat-area">
           <h1>New Chat - Patient {patientId}</h1>
           <div className="chatArea">
@@ -192,11 +229,11 @@ const saveMessage = async () => {
               <div
                 key={msg.id}
                 className={`text ${
-                    msg.role === "user" ? "humanText" : "chatbotText"
-                  }`}
+                  msg.role === "user" ? "humanText" : "chatbotText"
+                }`}
               >
                 <p>{msg.text}</p>
-                <audio controls>
+                <audio controls onPlay={(e) => (e.target.playbackRate = 1.25)}>
                   <source src={msg.audioUrl} type="audio/wav" />
                 </audio>
               </div>
@@ -229,6 +266,6 @@ const saveMessage = async () => {
       </div>
     </>
   );
-}
+};
 
 export default Assistant;
