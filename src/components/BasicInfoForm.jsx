@@ -27,28 +27,28 @@ const BasicInforForm = ({patientData, setPatientData}) => {
 
               <div className="form-group">
                 <label className=".form-group label">Name:</label>
-                <input className=".form-group input"type="text" placeholder="Name eingeben" name="name" value={patientData.name} onChange={handleChange}
+                <input className=".form-group input"type="text" placeholder="Name eingeben" name="firstName" value={patientData.firstName|| ""} onChange={handleChange}
                />
               </div>
 
               <div className="form-group">
                 <label className=".form-group label">Nachname:</label>
-                <input type="text" placeholder="Nachname eingeben" name="nachname" value={patientData.nachname} onChange={handleChange} />
+                <input type="text" placeholder="Nachname eingeben" name="lastName" value={patientData.lastName|| ""} onChange={handleChange} />
               </div>
 
               <div className="form-group">
                 <label className=".form-group label">Nationalität:</label>
-                <input type="text" placeholder="Nationalität eingeben"  name="nationalitaet" value={patientData.nationalitaet} onChange={handleChange}   />
+                <input type="text" placeholder="Nationalität eingeben"  name="nationality" value={patientData.nationality|| ""} onChange={handleChange}   />
               </div>
 
               <div className="form-group">
                 <label className=".form-group label">Geburtsdatum:</label>     
-                <input  type="text" placeholder="tt.mm.jjjj" name="geburtsdatum" value={patientData.geburtsdatum} onChange={handleChange} />
+                <input  type="text" placeholder="jjj.mm.tt" name="birthDate" value={patientData.birthDate|| ""} onChange={handleChange} />
               </div>
 
               <div className="form-group">
                 <label>Geschlecht:</label>
-                <select name="geschlecht" value={patientData.geschlecht} onChange={handleChange}>
+                <select name="gender" value={patientData.gender} onChange={handleChange}>
                   <option value="" disabled hidden>Bitte wählen...</option>
                   <option>Weiblich</option>
                   <option>Männlich</option>
@@ -76,7 +76,7 @@ const BasicInforForm = ({patientData, setPatientData}) => {
 
               <div className="form-group">
                 <label>Ernährungstyp:</label>
-                <select name="ernaehrungstyp" value={patientData.ernaehrungstyp} onChange={handleChange}>
+                <select name="diet" value={patientData.diet} onChange={handleChange}>
                 <option value="" disabled hidden>Bitte wählen...</option>
                 <option>Normalkost</option>
                 <option>Hausmannskost</option>
@@ -93,7 +93,7 @@ const BasicInforForm = ({patientData, setPatientData}) => {
 
               <div className="form-group">
                 <label>Plegestufe:</label>
-                <select name="plegestufe" value={patientData.plegestufe} onChange={handleChange}>
+                <select name="careLevel" value={patientData.careLevel} onChange={handleChange}>
                 <option value="" disabled hidden>Bitte wählen...</option>
                 <option>1</option>
                 <option>2 </option>
@@ -105,7 +105,7 @@ const BasicInforForm = ({patientData, setPatientData}) => {
 
               <div className="form-group">
                 <label className=".form-group label">Raumnummer:</label>
-                <input type="text" placeholder="Raumnummer" name="raumnummer" value={patientData.raumnummer} onChange={handleChange}  />
+                <input type="text" placeholder="Raumnummer" name="roomNumber" value={patientData.roomNumber|| ""} onChange={handleChange}  />
               </div> 
 
 

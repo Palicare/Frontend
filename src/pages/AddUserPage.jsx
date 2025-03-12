@@ -9,93 +9,109 @@ import "../styles/AddUserPage.css";
 import { useRef, useState } from "react";
 
 const AddUserPage = () => {
-  const [patientData,setPatientData] = useState({// 1. Teil
-    name: "",
-    nachname: "",
-    nationalitaet: "",
-    geburtsdatum: "",
-    geschlecht: "",
-    religion: "",
-    ernaehrungstyp: "",
-    plegestufe: "",
-    raumNumber:"",
-    foto:"",})
+  const [patientData, setPatientData] = useState({
+        firstName: "",    //  改成后端数据库的字段名
+        lastName: "",     //  
+        nationality: "",  //  
+        birthdate: "",    //  YYYY-MM-DD
+        gender: "",       //  
+        religion: "",     //  
+        diet: "",         // 
+        carelevel: "",    // 
+        roomNumber: ""    //  
+  });
   
   const [notfallData, setNotfallData] = useState({//2 Teil
-    name: "",
-    nachname: "",
-    geburtsdatum: "",
-    beziehung: "",
-    telefonnummer: "",
-    vollmacht: "",
+    firstName: "",
+    lastName: "",
+    birthDate: "",
+    relation: "",
+    // telefonnummer: "",
+    power: "",
 });
  
-  const[medicalData, setMedicalData] = useState({allergien: " ", symptome: " "});//3. Teil????
-  const [pflegebedarf, setPflegebedarf] = useState({ pflegebedarf: " " });  //4. Teil
+  const[medicalData, setMedicalData] = useState({allergies: [],  symptoms: []});//
+  const [pflegebedarf, setPflegebedarf] = useState({ careNeeds: [] });  //
   
   
   const [sonstigeData, setSonstigeData] = useState({
-    zusatz:" ",    
-    vorliebe: " ",    
-    abneigung:" ",
+    misc:" ",    
+    // vorliebe: " ",    
+    // abneigung:" ",
   })
   
    
   const handleSubmit = async () => {
-    const formData = new FormData();
-    formData.append("patientData", JSON.stringify(patientData));
-    formData.append("notfallData", JSON.stringify(notfallData));
-    formData.append("medicalData", JSON.stringify(medicalData));
-    formData.append("pflegebedarf", JSON.stringify(pflegebedarf));
-    formData.append("sonstigeData", JSON.stringify(sonstigeData));
-    
-    // AddFoto
-    if(patientData.image){
-      formData.append("image", patientData.image);
-    }
-
-    try {
-      const response = await fetch("http://localhost:8080/uploadform", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        alert("Daten erfolgreich gesendet!");
-
-        // 清空表单数据
-        setPatientData({
-          name: "",
-          nachname: "",
-          nationalitaet: "",
-          geburtsdatum: "",
-          geschlecht: "",
-          religion: "",
-          ernaehrungstyp: "",
-          plegestufe: "",
-          raumNumber:"",
-          foto: null
-        });
-
-        setNotfallData({
-          name: "",
-          nachname: "",
-          geburtsdatum: "",
-          beziehung: "",
-          telefonnummer: "",
-          vollmacht: "",
-        });
-
-        setMedicalData({ allergien: "", symptome: "" });
-        setPflegebedarf({ pflegebedarf: "" });
-      } else {
-        alert("Fehler beim Hochladen.");
-      }
-    } catch (error) {
-      console.error("Speichern-Fehler:", error);
-      alert("Speichern ist fehlgeschlagen.");
-    }
+    const patientFormData = {
+      firstName: patientData.firstName,
+      lastName: patientData.lastName,
+      nationality: patientData.nationality,
+      birthdate: patientData.birthdate,
+      gender: patientData.gender,
+      religion: patientData.religion,
+      diet: patientData.diet,
+      carelevel: patientData.carelevel,
+      roomNumber: patientData.roomNumber,
+      allergies: medicalData.allergies,
+      symptoms: medicalData.symptoms,
+      careNeeds: pflegebedarf.careNeeds,
+      misc: sonstigeData.misc
   };
+
+  try {
+    // Upload AllDaten-Json
+    const response = await fetch("http://localhost:8080/patients", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(patientFormData)
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        alert("Fehler beim Speichern: " + errorText);
+        return;
+    }
+
+    const patientDataResponse = await response.json();
+    const patientId = patientDataResponse.id; // 🔹 获取创建的 `patientId`
+    console.log("Neuer Patient ID:", patientId);
+    console.log("Gesendete Patientendaten:", patientFormData);
+    
+
+    // wenn image vorhanden
+    if (patientData.foto) {
+        const imageFormData = new FormData();
+        imageFormData.append("file", patientData.foto);
+
+        const imageResponse = await fetch(`http://localhost:8080/patients/${patientId}/profile-picture`, {
+            method: "POST",
+            body: imageFormData
+        });
+
+        if (!imageResponse.ok) {
+            alert("Fehler beim Hochladen des Bildes.");
+            return;
+        }
+    }
+
+    alert("Patient erfolgreich erstellt!");
+    
+    // Leern alle Daten
+    setPatientData({
+        firstName: "", lastName: "", nationality: "", birthdate: "",
+        gender: "", religion: "", diet: "", carelevel: "", roomNumber: ""
+    });
+
+    setNotfallData({ firstName: "", lastName: "", birthDate: "", relation: "", power: "" });
+    setMedicalData({ allergies: [], symptoms: [] });
+    setPflegebedarf({ careNeeds: [] });
+    setSonstigeData({ misc: "" });
+
+} catch (error) {
+    console.error("Speicherungsfehler:", error);
+    alert("Speichern ist fehlgeschlagen.");
+}
+};
 
   return (
     <>
@@ -105,7 +121,8 @@ const AddUserPage = () => {
     <BasicInforForm patientData={patientData} setPatientData={setPatientData} />
     <NotfallkontaktForm notfallData={notfallData} setNotfallData={setNotfallData} />
     <MedicalInfoForm medicalData={medicalData} setMedicalData={setMedicalData} />
-    <PalliativepflegeForm pflegebedarf={pflegebedarf} setPflegebedarf={setPflegebedarf} />
+    <PalliativepflegeForm pflegebedarf={pflegebedarf || { careNeeds: [] }} setPflegebedarf={setPflegebedarf} />
+
     <SonstigeForm sonstigeData={sonstigeData} setSonstigeData={setSonstigeData} />
   
     <div className="button-container">
