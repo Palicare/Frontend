@@ -120,7 +120,7 @@ const PatientCard = ({ patient, id }) => {
   // profile picture
   const profilePictureUrl = patientId
     ? `http://localhost:8080/patients/${patientId}/profile-picture`
-    : "/api/placeholder/100/100";
+    : "./src/Assets/DefaultUser.png";
 
   const displayData = {
     name:
@@ -172,23 +172,25 @@ const PatientCard = ({ patient, id }) => {
             </div>
           </div>
         </div>
-
-        {/* Right section with avatar and room */}
-        <div className="patient-sidebar">
+        {/* middle section with avatar */}
+        <div className="patient-avatar-container">
           <img
             src={profilePictureUrl}
             alt={displayData.name}
             className="patient-avatar"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = "/api/placeholder/100/100";
+              e.target.src = "./src/Assets/DefaultUser.png";
             }}
           />
+        </div>
 
+        {/* Right section with  room and emergency */}
+        <div className="patient-sidebar">
           <div className="room-info">
             <div className="room-number">
               <RoomIcon />
-              <span>{displayData.roomNumber}</span>
+              <p>{displayData.roomNumber}</p>
             </div>
 
             <div className="emergency-contact">

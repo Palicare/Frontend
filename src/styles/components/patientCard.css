@@ -1,10 +1,12 @@
 .patient-card {
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #2b86a1;
-  color: white;
-  max-width: 650px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+  background-color: var(--main-blue);
+  color: var(--off-white);
+  width: 85%;
+  min-width: 650px;
+  cursor: pointer;
 }
 
 .patient-card.loading,
@@ -14,7 +16,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px;
+  padding: 1rem;
 }
 
 .patient-card.error {
@@ -23,82 +25,91 @@
 
 .patient-card-container {
   display: flex;
+  align-items: stretch;
+  height: 150px;
 }
 
 .patient-info {
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 0.5rem 1rem;
 }
 
 .patient-header {
   display: flex;
-  padding: 10px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  align-items: center;
+  padding: 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
 }
 
 .patient-name {
   flex: 1;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 1.1rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .patient-age {
-  padding: 0 8px;
+  padding: 0 0.5rem;
   white-space: nowrap;
+  font-size: 1rem;
 }
 
 .patient-gender {
-  width: 32px;
+  width: 2rem;
   text-align: center;
+  font-size: 1rem;
 }
 
 .patient-details {
-  padding: 10px 16px;
+  padding: 0.75rem 0;
 }
 
 .patient-detail-row {
   display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 4px;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
 }
 
 .detail-label {
-  font-weight: 500;
-  margin-right: 8px;
+  font-weight: 600;
+  margin-right: 0.5rem;
 }
 
 .detail-value {
-  margin-right: 16px;
+  margin-right: 1rem;
 }
 
 .diet-label {
-  margin-left: 4px;
+  margin-left: 0.5rem;
+}
+
+.patient-avatar-container {
+  align-content: center;
+}
+.patient-avatar {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 2px solid var(--off-white);
 }
 
 .patient-sidebar {
-  width: 110px;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 10px;
+  width: 7.5rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-}
-
-.patient-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 8px;
-  object-fit: cover;
 }
 
 .room-info {
   text-align: center;
-  margin-top: 8px;
+  margin-top: 0.5rem;
   width: 100%;
 }
 
@@ -106,17 +117,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 0.25rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
 }
 
-.room-icon {
-  height: 18px;
-  width: 18px;
-  margin-right: 4px;
+.room-number svg {
+  height: 1.25rem;
+  width: 1.25rem;
+  margin-right: 0.25rem;
+  fill: var(--off-white);
+  background-color: transparent;
 }
 
 .emergency-contact {
-  margin-top: 4px;
-  font-size: 12px;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
 }
 
 .contact-label {
@@ -127,57 +142,5 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 96px;
-}
-
-.demo-container {
-  padding: 16px;
-}
-
-.demo-title {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-
-.demo-controls {
-  margin-top: 32px;
-  padding: 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-}
-
-.controls-title {
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.controls-row {
-  display: flex;
-  align-items: center;
-}
-
-.control-label {
-  margin-right: 8px;
-}
-
-.control-input {
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  padding: 4px 8px;
-  color: black;
-}
-
-.control-button {
-  margin-left: 16px;
-  padding: 4px 12px;
-  background-color: #4b5563;
-  color: white;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-}
-
-.control-button:hover {
-  background-color: #374151;
+  max-width: 7rem;
 }

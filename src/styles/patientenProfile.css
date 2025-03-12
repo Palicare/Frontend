@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f5f7fa;
+  background-color: var(--off-white);
   font-family: Arial, sans-serif;
 }
 
@@ -12,30 +12,49 @@
 }
 
 .page-title {
-  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  font-size: 16px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
 }
 
 .search-container {
+  display: flex;
+  justify-content: center;
   margin-bottom: 24px;
+  margin-top: 24px;
+  position: relative;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .search-input {
   width: 100%;
-  max-width: 500px;
   padding: 12px 16px;
   font-size: 16px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding-right: 40px;
 }
 
 .search-input:focus {
   outline: none;
   border-color: #2b86a1;
   box-shadow: 0 0 0 2px rgba(43, 134, 161, 0.2);
+}
+
+.search-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
 }
 
 .patients-grid {
@@ -56,7 +75,7 @@
   justify-content: center;
   align-items: center;
   padding: 40px;
-  background-color: white;
+  background-color: var(--off-white);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
@@ -68,4 +87,61 @@
 .no-results {
   color: #718096;
   font-style: italic;
+}
+
+.patients-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: stretch;
+  align-content: stretch;
+  gap: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  margin-bottom: 36px;
+  gap: 8px;
+}
+
+.pagination-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  font-size: 14px;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+  color: #333;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #f7f7f7;
+  border-color: #d0d0d0;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-button.active {
+  background-color: #2b86a1;
+  color: white;
+  border-color: #2b86a1;
+  font-weight: bold;
+}
+
+.pagination-button:first-child,
+.pagination-button:last-child,
+.pagination-button:nth-child(2),
+.pagination-button:nth-last-child(2) {
+  font-weight: bold;
 }

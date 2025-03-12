@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header.jsx";
 import PatientCard from "../components/patientCard.jsx";
 import "../styles/patientenProfile.css";
+import searchIcon from "../Assets/searchIcon.svg";
 
 const Patientenprofile = () => {
   const [patients, setPatients] = useState([]);
@@ -141,7 +142,9 @@ const Patientenprofile = () => {
     <div className="patientenprofile-container">
       <Header />
       <div className="content-container">
-        <h1>Patientenprofile</h1>
+        {/* <div className="page-title">
+          <h1>Patientenprofile</h1>
+        </div> */}
 
         <div className="search-container">
           <input
@@ -151,6 +154,7 @@ const Patientenprofile = () => {
             onChange={handleSearchChange}
             className="search-input"
           />
+          <img src={searchIcon} alt="Search" className="search-icon" />
         </div>
 
         {loading ? (
