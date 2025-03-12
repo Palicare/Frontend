@@ -1,9 +1,11 @@
 import { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "../styles/cameraView.css";
 import Header from "../components/Header";
 
 const FullScreenCamera = () => {
   const videoRef = useRef(null);
+  const navigate = useNavigate(); // React Router navigation
   const [capturedImage, setCapturedImage] = useState(null);
 
   const startCamera = async () => {
@@ -64,6 +66,11 @@ const FullScreenCamera = () => {
     startCamera();
   };
 
+  // Function to pass the captured image back to BasicInforForm
+  const saveImageAndGoBack = () => {
+    navigate("/adduser", { state: { capturedImage } }); // Pass image via navigation state
+  };
+
   return (
     <div>
       <Header />
@@ -81,7 +88,7 @@ const FullScreenCamera = () => {
           <div className="actionButtonGroup">
             <button className="actionbutton" onClick={rejectImage}>Erneut versuchen</button>
             <button className="recordButton passiv"></button>
-            <button className="actionbutton">Hinzufügen</button>
+            <button className="actionbutton" onClick={saveImageAndGoBack}>Hinzufügen</button>
           </div>
         )}
       </div>

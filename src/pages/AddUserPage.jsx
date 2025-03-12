@@ -1,4 +1,3 @@
-
 import BasicInforForm from "../components/BasicInfoForm.jsx";
 import HeaderAddUser from "../components/HeaderAddUser.jsx"; 
 import NotfallkontaktForm from "../components/NotfallkontaktForm.jsx";
@@ -6,41 +5,75 @@ import PalliativepflegeForm from "../components/PalliativpflegeForm.jsx";
 import MedicalInfoForm from "../components/MedicalInfoForm.jsx";
 import SonstigeForm from "../components/SonstigeForm.jsx";
 import "../styles/AddUserPage.css"; 
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom"; 
 
 const AddUserPage = () => {
-  const [patientData, setPatientData] = useState({
-        firstName: "",    //  改成后端数据库的字段名
-        lastName: "",     //  
-        nationality: "",  //  
-        birthdate: "",    //  YYYY-MM-DD
-        gender: "",       //  
-        religion: "",     //  
-        diet: "",         // 
-        carelevel: "",    // 
-        roomNumber: ""    //  
-  });
-  
-  const [notfallData, setNotfallData] = useState({//2 Teil
-    firstName: "",
-    lastName: "",
-    birthDate: "",
-    relation: "",
-    // telefonnummer: "",
-    power: "",
-});
- 
-  const[medicalData, setMedicalData] = useState({allergies: [],  symptoms: []});//
-  const [pflegebedarf, setPflegebedarf] = useState({ careNeeds: [] });  //
-  
-  
-  const [sonstigeData, setSonstigeData] = useState({
-    misc:" ",    
-    // vorliebe: " ",    
-    // abneigung:" ",
-  })
-  
-   
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Function to load data from sessionStorage (only during session)
+  const loadStoredData = (key, defaultValue) => {
+    const storedData = sessionStorage.getItem(key);
+    return storedData ? JSON.parse(storedData) : defaultValue;
+  };
+
+  // Load state from sessionStorage or use default values
+  const [patientData, setPatientData] = useState(() => loadStoredData("patientData", {
+    firstName: "", lastName: "", nationality: "", birthdate: "",
+    gender: "", religion: "", diet: "", carelevel: "", roomNumber: "", profileImage: ""
+  }));
+
+  const [notfallData, setNotfallData] = useState(() => loadStoredData("notfallData", {
+    firstName: "", lastName: "", birthDate: "", relation: "", power: ""
+  }));
+
+  const [medicalData, setMedicalData] = useState(() => loadStoredData("medicalData", {
+    allergies: [], symptoms: []
+  }));
+
+  const [pflegebedarf, setPflegebedarf] = useState(() => loadStoredData("pflegebedarf", {
+    careNeeds: []
+  }));
+
+  const [sonstigeData, setSonstigeData] = useState(() => loadStoredData("sonstigeData", {
+    misc: ""
+  }));
+
+  // Save data to sessionStorage on change
+  useEffect(() => sessionStorage.setItem("patientData", JSON.stringify(patientData)), [patientData]);
+  useEffect(() => sessionStorage.setItem("notfallData", JSON.stringify(notfallData)), [notfallData]);
+  useEffect(() => sessionStorage.setItem("medicalData", JSON.stringify(medicalData)), [medicalData]);
+  useEffect(() => sessionStorage.setItem("pflegebedarf", JSON.stringify(pflegebedarf)), [pflegebedarf]);
+  useEffect(() => sessionStorage.setItem("sonstigeData", JSON.stringify(sonstigeData)), [sonstigeData]);
+
+  // 🔹 **Reset data when the user navigates away (even by manually entering a URL)**
+  useEffect(() => {
+    const allowedPaths = ["/adduser", "/adduser/camera"];
+    
+    if (!allowedPaths.includes(location.pathname)) {
+      console.log("Navigated outside of AddUserPage. Resetting data...");
+
+      sessionStorage.removeItem("patientData");
+      sessionStorage.removeItem("notfallData");
+      sessionStorage.removeItem("medicalData");
+      sessionStorage.removeItem("pflegebedarf");
+      sessionStorage.removeItem("sonstigeData");
+
+      // Also reset local state
+      setPatientData({
+        firstName: "", lastName: "", nationality: "", birthdate: "",
+        gender: "", religion: "", diet: "", carelevel: "", roomNumber: "", profileImage: ""
+      });
+
+      setNotfallData({ firstName: "", lastName: "", birthDate: "", relation: "", power: "" });
+      setMedicalData({ allergies: [], symptoms: [] });
+      setPflegebedarf({ careNeeds: [] });
+      setSonstigeData({ misc: "" });
+    }
+  }, [location]); // Runs on route change **and** page load
+
+  // Handle form submission
   const handleSubmit = async () => {
     const patientFormData = {
       firstName: patientData.firstName,
@@ -56,83 +89,83 @@ const AddUserPage = () => {
       symptoms: medicalData.symptoms,
       careNeeds: pflegebedarf.careNeeds,
       misc: sonstigeData.misc
-  };
+    };
 
-  try {
-    // Upload AllDaten-Json
-    const response = await fetch("http://localhost:8080/patients", {
+    try {
+      const response = await fetch("http://localhost:8080/patients", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(patientFormData)
-    });
+      });
 
-    if (!response.ok) {
+      if (!response.ok) {
         const errorText = await response.text();
         alert("Fehler beim Speichern: " + errorText);
         return;
-    }
+      }
 
-    const patientDataResponse = await response.json();
-    const patientId = patientDataResponse.id; // 🔹 获取创建的 `patientId`
-    console.log("Neuer Patient ID:", patientId);
-    console.log("Gesendete Patientendaten:", patientFormData);
-    
+      const patientDataResponse = await response.json();
+      const patientId = patientDataResponse.id;
+      console.log("Neuer Patient ID:", patientId);
+      console.log("Gesendete Patientendaten:", patientFormData);
 
-    // wenn image vorhanden
-    if (patientData.foto) {
+      // If an image was taken, upload it
+      if (patientData.profileImage) {
         const imageFormData = new FormData();
-        imageFormData.append("file", patientData.foto);
+        imageFormData.append("file", patientData.profileImage);
 
         const imageResponse = await fetch(`http://localhost:8080/patients/${patientId}/profile-picture`, {
-            method: "POST",
-            body: imageFormData
+          method: "POST",
+          body: imageFormData
         });
 
         if (!imageResponse.ok) {
-            alert("Fehler beim Hochladen des Bildes.");
-            return;
+          alert("Fehler beim Hochladen des Bildes.");
+          return;
         }
-    }
+      }
 
-    alert("Patient erfolgreich erstellt!");
-    
-    // Leern alle Daten
-    setPatientData({
+      alert("Patient erfolgreich erstellt!");
+
+      // Clear all data after successful submission
+      sessionStorage.removeItem("patientData");
+      sessionStorage.removeItem("notfallData");
+      sessionStorage.removeItem("medicalData");
+      sessionStorage.removeItem("pflegebedarf");
+      sessionStorage.removeItem("sonstigeData");
+
+      setPatientData({
         firstName: "", lastName: "", nationality: "", birthdate: "",
-        gender: "", religion: "", diet: "", carelevel: "", roomNumber: ""
-    });
+        gender: "", religion: "", diet: "", carelevel: "", roomNumber: "", profileImage: ""
+      });
 
-    setNotfallData({ firstName: "", lastName: "", birthDate: "", relation: "", power: "" });
-    setMedicalData({ allergies: [], symptoms: [] });
-    setPflegebedarf({ careNeeds: [] });
-    setSonstigeData({ misc: "" });
+      setNotfallData({ firstName: "", lastName: "", birthDate: "", relation: "", power: "" });
+      setMedicalData({ allergies: [], symptoms: [] });
+      setPflegebedarf({ careNeeds: [] });
+      setSonstigeData({ misc: "" });
 
-} catch (error) {
-    console.error("Speicherungsfehler:", error);
-    alert("Speichern ist fehlgeschlagen.");
-}
-};
+    } catch (error) {
+      console.error("Speicherungsfehler:", error);
+      alert("Speichern ist fehlgeschlagen.");
+    }
+  };
 
   return (
     <>
-    <HeaderAddUser />
-    <br />
-    {/* 传递 patientData 和 setPatientData 作为 props */}
-    <BasicInforForm patientData={patientData} setPatientData={setPatientData} />
-    <NotfallkontaktForm notfallData={notfallData} setNotfallData={setNotfallData} />
-    <MedicalInfoForm medicalData={medicalData} setMedicalData={setMedicalData} />
-    <PalliativepflegeForm pflegebedarf={pflegebedarf || { careNeeds: [] }} setPflegebedarf={setPflegebedarf} />
+      <HeaderAddUser />
+      <br />
+      <BasicInforForm patientData={patientData} setPatientData={setPatientData} />
+      <NotfallkontaktForm notfallData={notfallData} setNotfallData={setNotfallData} />
+      <MedicalInfoForm medicalData={medicalData} setMedicalData={setMedicalData} />
+      <PalliativepflegeForm pflegebedarf={pflegebedarf || { careNeeds: [] }} setPflegebedarf={setPflegebedarf} />
+      <SonstigeForm sonstigeData={sonstigeData} setSonstigeData={setSonstigeData} />
 
-    <SonstigeForm sonstigeData={sonstigeData} setSonstigeData={setSonstigeData} />
-  
-    <div className="button-container">
-        <button className="cancel-button" onClick={() => window.history.back()}>Abbrechen</button>
+      <div className="button-container">
+        <button className="cancel-button" onClick={() => navigate("/")}>Abbrechen</button>
         <button className="save-button" onClick={handleSubmit}>Speichern</button>
-    </div>
-  </>
-
+      </div>
+    </>
   );
-
 };
 
 export default AddUserPage;
