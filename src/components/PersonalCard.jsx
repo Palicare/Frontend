@@ -65,7 +65,7 @@ const PersonalCard = () => {
           <br />
           <p>
             <strong>Name: </strong>
-            {patientData?.firstName} {patientData?.lastName}
+            {patientData?.firstName || "N/A"} {patientData?.lastName || ""}
           </p>
           <p>
             <strong>Geschlecht:</strong> {patientData?.gender || "N/A"}
@@ -74,7 +74,10 @@ const PersonalCard = () => {
             <strong>Geburtsdatum:</strong> {patientData?.birthDate ? formatDate(patientData?.birthDate) : "N/A"}
           </p>
           <p>
-            <strong>Notfallkontakt:</strong> {patientData?.contact.firstName} {patientData?.contact.lastName}  ({patientData?.contact.relation})  
+            <strong>Notfallkontakt:</strong>
+            {patientData?.contact
+              ? `${patientData.contact.firstName} ${patientData.contact.lastName} (${patientData.contact.relation})`
+              : "N/A"}
           </p>
           <p>
             <strong>Religion:</strong> {patientData?.religion || "N/A"}
@@ -84,9 +87,6 @@ const PersonalCard = () => {
           </p>
           <p>
             <strong>Ernährungstyp:</strong> {patientData?.diet || "N/A"}
-          </p>
-          <p>
-            <strong>Krankenkasse:</strong> {patientData?.insurance || "N/A"}
           </p>
         </div>
       </div>

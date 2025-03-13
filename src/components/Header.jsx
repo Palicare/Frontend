@@ -28,7 +28,7 @@ const Header = ({ isHomeScreen }) => {
         )}
       </div>
       <img className="logo" src={paliLogo1} alt="Logo" />
-      <button onClick={() => navigate()} className="icon-button">
+      <button onClick={() => navigate()} className="icon-button" style={{marginRight: '40px'}}>
         <div className="icon-border">
           <img src={Profile} alt="Profile" />
         </div>
