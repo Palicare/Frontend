@@ -84,7 +84,7 @@ const FullScreenCamera = () => {
         {!capturedImage ? (
           <video className="camera" ref={videoRef} autoPlay playsInline width="677" height="677" />
         ) : (
-          <img src={URL.createObjectURL(capturedImage)} alt="Captured" />
+          <img src={URL.createObjectURL(capturedImage)} className="capturedImage" alt="Captured" />
         )}
       </div>
       <div className="buttonContainer">

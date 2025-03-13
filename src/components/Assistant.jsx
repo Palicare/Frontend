@@ -27,7 +27,7 @@ const Assistant = () => {
   }, [patientId]);
 
   const [messages, setMessages] = useState([
-    { role: "assistant", text: "Hallo wie kann ich die Helfen?", audioUrl: "" },
+    { role: "assistant", text: "Hallo wie kann ich dir helfen?", audioUrl: "" },
   ]);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const Assistant = () => {
       const lastMessage = messages[messages.length - 1];
       if (lastMessage.role === "assistant" && lastMessage.audioUrl) {
         const audio = new Audio(lastMessage.audioUrl);
-        audio.playbackRate = 1.25; // Adjust this value for faster/slower speed
+        audio.playbackRate = 1.25;
         audio.play();
       }
     }
@@ -60,122 +60,15 @@ const Assistant = () => {
       stopRecording();
     }
   };
-  const getLLMresponse = async (transcribedText) => {
-    const jsonBody = JSON.stringify({
-      patientId,
-      messages: [
-        ...messages.map(({ role, text }) => ({ role, content: text })),
-        { role: "user", content: transcribedText },
-      ],
-    });
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/llm`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: jsonBody,
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.text();
-      const cleanedData = data.replace(/<think>.*?<\/think>/gs, "");
-
-      return cleanedData; // Die generierte Antwort des LLMs
-    } catch (error) {
-      console.error("Fehler beim Abrufen der LLM-Antwort:", error);
-      return null;
-    }
-  };
-
-  const getTextToSpeach = async (text) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/tts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "*/*",
-        },
-        body: JSON.stringify(
-          text
-            .replace(/^\s+/gm, "") // Remove leading spaces from each line
-            .replace(/\n{2,}/g, "\n") // Replace multiple newlines with a single newline
-            .trim()
-        ),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const audioBlob = await response.blob(); // Convert response to a Blob
-      const audioUrl = URL.createObjectURL(audioBlob); // Create a URL for playback
-
-      return audioUrl;
-    } catch (error) {
-      console.error("Error generating text-to-speech audio:", error);
-      return null;
-    }
-  };
-
-  const saveMessage = async () => {
-    const lastAudioUrl = await stopRecording();
-
-    // Convert the audio file URL to a Blob
-    const response = await fetch(lastAudioUrl);
-    const audioBlob = await response.blob();
-    const audioFile = new File([audioBlob], "audio.mp3", {
-      type: "audio/mpeg",
-    });
-
-    // Create FormData to send the file
-    const formData = new FormData();
-    formData.append("file", audioFile);
-
-    try {
-      // Send audio file to FastAPI for transcription
-      const transcriptionResponse = await fetch(`${API_BASE_URL}/api/stt`, {
-        method: "POST",
-        body: formData,
-      });      
-
-      const transcriptionData = await transcriptionResponse.text();
-      const transcribedText = transcriptionData || "Transcription failed";
-
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          role: "user",
-          text: transcribedText,
-          audioUrl: lastAudioUrl,
-        },
-      ]);
-
-      const llmResponse = await getLLMresponse(transcribedText);
-      const ttsResponse = await getTextToSpeach(llmResponse);
-
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          role: "assistant",
-          text: llmResponse,
-          audioUrl: ttsResponse,
-        },
-      ]);
-    } catch (error) {
-      console.error("Error transcribing audio:", error);
-    }
-    setIsRecording((prevState) => !prevState);
-  };
 
   const startRecording = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
+      const constraints = { audio: true };
+      if (navigator.userAgent.match(/Android|iPhone|iPad/i)) {
+        constraints.video = { facingMode: "environment" }; // Use back camera on mobile
+      }
+      
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
       mediaRecorderRef.current = new MediaRecorder(stream);
       audioChunksRef.current = [];
 
@@ -184,59 +77,25 @@ const Assistant = () => {
       };
 
       mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, {
-          type: "audio/wav",
-        });
+        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
         const newAudioUrl = URL.createObjectURL(audioBlob);
         setAudioUrls((prevUrls) => [...prevUrls, newAudioUrl]);
       };
 
       mediaRecorderRef.current.start();
     } catch (error) {
-      console.error("Error accessing microphone:", error);
+      console.error("Error accessing microphone or camera:", error);
     }
-  };
-
-  const stopRecording = () => {
-    return new Promise((resolve) => {
-      if (mediaRecorderRef.current) {
-        mediaRecorderRef.current.onstop = () => {
-          const audioBlob = new Blob(audioChunksRef.current, {
-            type: "audio/wav",
-          });
-          const newAudioUrl = URL.createObjectURL(audioBlob);
-          setAudioUrls((prevUrls) => {
-            const updatedUrls = [...prevUrls, newAudioUrl];
-            resolve(newAudioUrl);
-            return updatedUrls;
-          });
-        };
-        mediaRecorderRef.current.stop();
-      }
-    });
-  };
-
-  const abortRecording = () => {
-    if (mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop();
-    }
-    setAudioUrls((prev) => prev.slice(0, -1));
-    setIsRecording((prevState) => !prevState);
   };
 
   return (
     <>
       <div className="contentArea">
         <div className="chat-area">
-        <h1 className="chat-title">New Chat - Patient {patientId}</h1>
+          <h1 className="chat-title">New Chat - Patient {patientId}</h1>
           <div className="chatArea" ref={chatAreaRef}>
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`text ${
-                  msg.role === "user" ? "humanText" : "chatbotText"
-                }`}
-              >
+            {messages.map((msg, index) => (
+              <div key={index} className={`text ${msg.role === "user" ? "humanText" : "chatbotText"}`}>
                 <p>{msg.text}</p>
                 <audio controls onPlay={(e) => (e.target.playbackRate = 1.25)}>
                   <source src={msg.audioUrl} type="audio/wav" />
@@ -244,29 +103,6 @@ const Assistant = () => {
               </div>
             ))}
           </div>
-        </div>
-
-        <div className="lowerInteractionBar">
-          {isRecording ? (
-            <div className="interactionButtonArea">
-              <button className="interactionButton" onClick={toggleButton}>
-                <img src={MicrophoneIcon} alt="Microphone Icon" />
-              </button>
-            </div>
-          ) : (
-            <div className="interactionButtonArea">
-              <button className="minorInteractionA" onClick={abortRecording}>
-                <img src={X} />
-              </button>
-              <button className="minorInteractionB">Pause</button>
-              <button className="interactionButton" onClick={toggleButton}>
-                <img src={RecordingIcon} alt="Recording Icon" />
-              </button>
-              <button className="minorInteractionC" onClick={saveMessage}>
-                <img src={Send} />
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </>

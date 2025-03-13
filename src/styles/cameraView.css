@@ -23,9 +23,13 @@
     margin: 10px auto;
 }
 
+.capturedImage{
+    width: 50vw;
+}
 
 .cameraFeed {
-    width: 677px;
+    width: 50vw; /* 677px / 971px * 100vw */
+    max-width: 677px;
     border: 15px solid var(--light-blue);
     border-radius: 20px;
     margin: 2em auto;
@@ -33,15 +37,15 @@
 }
 
 .camera {
-    width: 677px;
-    height: 677px;
-    object-fit: cover; /* Ensures the video fills the area without distortion */
-    border-radius: 8px; /* Optional: adds rounded corners */
-    background-color: black; /* Optional: fallback color if no video */
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Ensures it remains a square */
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: black;
     display: block;
     margin: 0 auto;
 }
-
 
 .buttonContainer {
     display: flex;

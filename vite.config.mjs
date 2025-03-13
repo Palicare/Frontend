@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import os from 'os';
 import https from 'https';
+import fs from 'fs';
+import path from 'path';
 
 // Function to get local IPv6
 function getLocalIPv6() {
@@ -48,8 +50,12 @@ async function setupViteConfig() {
     plugins: [react()],
     server: {
       host: '::', // Allow both IPv4 & IPv6
-      port: 80, // Publicly accessible frontend
+      port: 443, // Publicly accessible frontend
       strictPort: true,
+      https: {
+        key: fs.readFileSync(path.resolve('./src/https/key.pem')),
+        cert: fs.readFileSync(path.resolve('./src/https/cert.pem')),
+      },
       proxy: {
         '/api': {
           target: BACKEND_URL, // 🔥 Proxy to localhost (backend is never exposed)
@@ -59,8 +65,8 @@ async function setupViteConfig() {
         },
       },
       allowedHosts: [
-        '2000slash.duckdns.org', // Explicitly allow frontend domains
-        'monkika.de'
+        'https://2000slash.duckdns.org', // Explicitly allow frontend domains
+        'https://monkika.de'
       ],
     },
     define: {
