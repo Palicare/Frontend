@@ -45,7 +45,7 @@ const DetailViewPage = () => {
   useEffect(() => {
     const getPatientData = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/patients/${patientId}`);
+        const response = await fetch(`${API_BASE_URL}/api/patients/${patientId}`);
         const data = await response.json();
         setPatientData(data);
         console.log(data.contact);

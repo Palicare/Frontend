@@ -1,37 +1,72 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import os from 'os';
+import https from 'https';
 
-// Function to get the correct local IP
-function getLocalIp() {
+// Function to get local IPv6
+function getLocalIPv6() {
   const interfaces = os.networkInterfaces();
+  let fallbackIP = "::1"; // Default to localhost
+
   for (const iface of Object.values(interfaces)) {
     for (const config of iface || []) {
-      if (config.family === 'IPv4' && !config.internal) {
-        // Prefer IPs in the 192.168.x.x or 10.x.x.x range
-        if (config.address.startsWith('192.168.') || config.address.startsWith('10.')) {
-          return config.address;
+      if (config.family === 'IPv6' && !config.internal) {
+        if (/^([2-3][0-9A-Fa-f]{3}:)/.test(config.address)) {
+          return config.address; // Prefer public IPv6 immediately
+        }
+        if (!config.address.startsWith('fe80::')) {
+          fallbackIP = config.address; // Save non-local IPv6
         }
       }
     }
   }
-  // Fallback if no match found
-  return 'localhost';
+
+  return fallbackIP;
 }
 
-const LOCAL_IP = getLocalIp();
-const BACKEND_PORT = 8080; // Adjust if your backend runs on a different port
-const BACKEND_URL = `http://${LOCAL_IP}:${BACKEND_PORT}`;
+// Function to get global IPv6 from ipify
+async function getGlobalIPv6() {
+  return new Promise((resolve) => {
+    https.get('https://api64.ipify.org', (res) => {
+      let data = '';
+      res.on('data', (chunk) => (data += chunk));
+      res.on('end', () => resolve(data.trim()));
+    }).on('error', () => resolve(getLocalIPv6())); // Fallback to local IPv6
+  });
+}
 
-console.log(`✅ Correct Backend IP detected: ${BACKEND_URL}`);
+// Async setup to fetch IPv6 dynamically
+async function setupViteConfig() {
+  const LOCAL_IPv6 = await getGlobalIPv6();
+  const BACKEND_PORT = 8080;
+  const BACKEND_URL = `http://localhost:${BACKEND_PORT}`; // 🔥 Use localhost to keep backend private
 
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    host: LOCAL_IP, // Bind to the correct local network interface
-    port: 5173, // Change if needed
-  },
-  define: {
-    'import.meta.env.VITE_API_BASE_URL': JSON.stringify(BACKEND_URL),
-  },
-});
+  console.log(`✅ Public/Global IPv6 Detected: ${LOCAL_IPv6}`);
+  console.log(`✅ Backend is proxied internally at: ${BACKEND_URL}`);
+
+  return defineConfig({
+    plugins: [react()],
+    server: {
+      host: '::', // Allow both IPv4 & IPv6
+      port: 80, // Publicly accessible frontend
+      strictPort: true,
+      proxy: {
+        '/api': {
+          target: BACKEND_URL, // 🔥 Proxy to localhost (backend is never exposed)
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
+      allowedHosts: [
+        '2000slash.duckdns.org', // Explicitly allow frontend domains
+        'monkika.de'
+      ],
+    },
+    define: {
+      'import.meta.env.VITE_API_BASE_URL': JSON.stringify('/api'), // 🔥 Clean API calls in frontend
+    },
+  });
+}
+
+export default setupViteConfig();

@@ -23,10 +23,10 @@ const Patientenprofile = () => {
       setLoading(true);
 
       const endpoint = searchTerm
-        ? `${API_BASE_URL}/patients/search?query=${encodeURIComponent(
+        ? `${API_BASE_URL}/api/patients/search?query=${encodeURIComponent(
             searchTerm
           )}&page=${currentPage}&size=${pageSize}`
-        : `${API_BASE_URL}/patients?page=${currentPage}&size=${pageSize}`;
+        : `${API_BASE_URL}/api/patients?page=${currentPage}&size=${pageSize}`;
 
       const response = await fetch(endpoint);
 

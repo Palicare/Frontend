@@ -15,7 +15,7 @@ const PersonalCard = () => {
   useEffect(() => {
     const getPatientData = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/patients/${patientId}`);
+        const response = await fetch(`${API_BASE_URL}/api/patients/${patientId}`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch patient data");

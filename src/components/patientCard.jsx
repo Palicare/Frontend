@@ -52,7 +52,7 @@ const PatientCard = ({ patient, id }) => {
     const fetchPatientData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/patients/${id}`);
+        const response = await fetch(`${API_BASE_URL}/api/patients/${id}`);
 
         if (!response.ok) {
           throw new Error(`Failed to fetch patient data: ${response.status}`);
@@ -120,7 +120,7 @@ const PatientCard = ({ patient, id }) => {
 
   // profile picture
   const profilePictureUrl = patientId
-  ? `${API_BASE_URL}/patients/${patientId}/profile-picture`
+  ? `${API_BASE_URL}/api/patients/${patientId}/profile-picture`
   : "./src/Assets/DefaultUser.png";
 
   const displayData = {

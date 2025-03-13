@@ -15,7 +15,7 @@ const Assistant = () => {
   useEffect(() => {
     const getPatientData = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/patients/${patientId}`);
+        const response = await fetch(`${API_BASE_URL}/api/patients/${patientId}`);
         const data = await response.json();
         setPatientData(data);
       } catch (error) {
@@ -70,7 +70,7 @@ const Assistant = () => {
     });
 
     try {
-      const response = await fetch(`${API_BASE_URL}/llm`, {
+      const response = await fetch(`${API_BASE_URL}/api/llm`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +94,7 @@ const Assistant = () => {
 
   const getTextToSpeach = async (text) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/tts`, {
+      const response = await fetch(`${API_BASE_URL}/api/tts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -138,7 +138,7 @@ const Assistant = () => {
 
     try {
       // Send audio file to FastAPI for transcription
-      const transcriptionResponse = await fetch(`${API_BASE_URL}/stt`, {
+      const transcriptionResponse = await fetch(`${API_BASE_URL}/api/stt`, {
         method: "POST",
         body: formData,
       });      

@@ -93,7 +93,7 @@ const AddUserPage = () => {
     };
 
     try {
-      const response = await fetch(`${API_BASE_URL}/patients`, {
+      const response = await fetch(`${API_BASE_URL}/api/patients`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(patientFormData)
@@ -115,7 +115,7 @@ const AddUserPage = () => {
         const imageFormData = new FormData();
         imageFormData.append("file", patientData.profileImage);
 
-        const imageResponse = await fetch(`${API_BASE_URL}/patients/${patientId}/profile-picture`, {
+        const imageResponse = await fetch(`${API_BASE_URL}/api/patients/${patientId}/profile-picture`, {
           method: "POST",
           body: imageFormData
         });
