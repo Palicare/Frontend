@@ -5,16 +5,6 @@
   color: var(--off-white);
 }
 
-/* Header 整体样式 */
-.header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 确保左中右对齐 */
-    background-color: #3B7E9B;
-    padding: 10px 20px;
-    height: 60px;
-    width: 100%;
-  }
   
   /* 统一所有图标的样式 */
   .icon {

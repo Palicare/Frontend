@@ -39,6 +39,41 @@
     padding: 1em;
 }
 
+.loadingIndicator {
+    border: none;
+    background: var(--main-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: -3em;
+    margin: 0 auto;
+    border-radius: 4em;
+    padding: 1em;
+    width: 3em;
+    height: 3em;
+}
+
+.loadingIndicator::after {
+    content: "";
+    width: 1.5em;
+    height: 1.5em;
+    border: 8px dotted white;
+    border-radius: 50%;
+    animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
 .minorInteractionA, 
 .minorInteractionB, 
 .minorInteractionC {
