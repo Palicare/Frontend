@@ -45,7 +45,7 @@ const PersonalCard = () => {
     <div className="profile-container">
       <div className="profile-image">
         <img
-          src={patientData?.imageUrl || DefaultUserIcon}
+          src={`${API_BASE_URL}/api/patients/${patientId}/profile-picture` || DefaultUserIcon}
           style={{ width: "200px", height: "200px", display: "inline-block" }}
           alt="Patient"
         />
