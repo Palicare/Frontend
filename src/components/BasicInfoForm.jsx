@@ -26,11 +26,20 @@ const BasicInforForm = ({ patientData, setPatientData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     // Behandlung des Geburtsdatums, um sicherzustellen, dass es im Format JJJJ-MM-TT vorliegt
-    const formattedValue = name === "birthDate" ? new Date(value).toISOString().split("T")[0] : value;
+    let formattedValue = value;
+
+    if (name === "birthDate") {
+        formattedValue = new Date(value).toISOString().split("T")[0]; // 确保日期格式为 YYYY-MM-DD
+    } else if (name === "careLevel") {
+      formattedValue = value ? parseInt(value, 10).toString() : ""; // ✅ 确保是字符串
+  } else if (name === "roomNumber") {
+      formattedValue = value !== "" ? parseInt(value, 10).toString() : ""; // ✅ 确保是字符串
+  }
     setPatientData((prevData) => ({
-      ...prevData,
-      [name]: formattedValue,
+        ...prevData,
+        [name]: formattedValue,
     }));
   };
 
@@ -133,8 +142,8 @@ const BasicInforForm = ({ patientData, setPatientData }) => {
           </div>
 
           <div className="form-group">
-            <label>Raumnummer:</label>
-            <input type="text" placeholder="Raumnummer eingeben" name="roomNumber" value={patientData.roomNumber || ""} onChange={handleChange} />
+            <label>Zimmernummer:</label>
+            <input type="number" placeholder="Zimmernummer eingeben" name="roomNumber" value={patientData.roomNumber || ""} onChange={handleChange} />
           </div> 
         </div>
       </div>

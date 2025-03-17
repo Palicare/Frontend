@@ -346,7 +346,7 @@
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  background-color: transparent;
+  background-color: var(--off-white);
   color: black;
 }
 

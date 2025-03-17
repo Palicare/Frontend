@@ -5,10 +5,17 @@ const SonstigeForm = ({ sonstigeData, setSonstigeData }) => {
     // handleChange
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setSonstigeData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
+    
+       // 直接更新解析后的对象
+    //    setSonstigeData({
+    //     ...sonstigeData,
+    //     [name]: value
+    // });
+    setSonstigeData((prevData) => ({
+        ...prevData,
+        [name]: value // ✅ 直接更新 `vorliebe` 或 `abneigung`
+    }));
+    
     };
     
     return (
@@ -19,20 +26,15 @@ const SonstigeForm = ({ sonstigeData, setSonstigeData }) => {
                 <hr className="linie-divider" />
 
                 <div className="form-grid">
-                    <div className="form-group">
-                        <label className=".form-group label">Zusatzangaben:</label>
-                        <input className=".form-group input"type="text" placeholder="Zusätzliche Informationen eingeben" name="zusatz" value={ sonstigeData.zusatz||""} onChange={handleChange} />
-                    </div>
-
-                    {/* <div className="form-group">
+                     <div className="form-group">
                         <label className=".form-group label">Vorlieben:</label>
-                        <input type="text" placeholder="Vorlieben eingeben"  name="vorliebe"  value={sonstigeData.vorliebe} onChange={handleChange} />
+                        <input type="text" placeholder="Vorlieben eingeben"  name="vorliebe"  value={sonstigeData.vorliebe || ""} onChange={handleChange} />
                     </div>
 
                     <div className="form-group">
                         <label className=".form-group label">Abneigungen:</label>     
-                        <input  type="text" placeholder="Abneigungen eingeben" name="abneigung"  value={sonstigeData.abneigung} onChange={handleChange}  />
-                    </div> */}
+                        <input  type="text" placeholder="Abneigungen eingeben" name="abneigung"  value={sonstigeData.abneigung || ""} onChange={handleChange}  />
+                    </div> 
 
      
                 </div>
