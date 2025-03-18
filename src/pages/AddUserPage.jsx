@@ -1,5 +1,5 @@
 import BasicInforForm from "../components/BasicInfoForm.jsx";
-import HeaderAddUser from "../components/HeaderAddUser.jsx"; 
+import Header from "../components/Header.jsx";
 import NotfallkontaktForm from "../components/NotfallkontaktForm.jsx";
 import PalliativepflegeForm from "../components/PalliativpflegeForm.jsx";
 import MedicalInfoForm from "../components/MedicalInfoForm.jsx";
@@ -35,11 +35,6 @@ const AddUserPage = () => {
     careNeeds: []
   }));
 
-  // 🔹 `misc` 存为字符串
-  // const [sonstigeData, setSonstigeData] = useState(() => {
-  //   const storedData = sessionStorage.getItem("sonstigeData");
-  //   return storedData ? { misc: storedData } : { misc: JSON.stringify({ vorliebe: "", abneigung: "" }) };
-  // });
   const [sonstigeData, setSonstigeData] = useState(() => {
     const storedData = sessionStorage.getItem("sonstigeData");
     return storedData ? JSON.parse(storedData) : { vorliebe: "", abneigung: "" };
@@ -50,11 +45,10 @@ const AddUserPage = () => {
    useEffect(() => sessionStorage.setItem("patientData", JSON.stringify(patientData)), [patientData]);
    useEffect(() => sessionStorage.setItem("medicalData", JSON.stringify(medicalData)), [medicalData]);
    useEffect(() => sessionStorage.setItem("pflegebedarf", JSON.stringify(pflegebedarf)), [pflegebedarf]);
-   // useEffect(() => sessionStorage.setItem("sonstigeData", JSON.stringify(sonstigeData)), [sonstigeData]);useEffect(() => {
    useEffect(() => {sessionStorage.setItem("sonstigeData", JSON.stringify(sonstigeData));}, [sonstigeData]);
   
 
-  // 🔹 **Reset data when the user navigates away (even by manually entering a URL) 在用户离开时重置数据（即使是手动输入 URL） **
+  // 🔹 **Reset data when the user navigates away (even by manually entering a URL) **
   useEffect(() => {
     const allowedPaths = ["/adduser", "/adduser/camera"];
     
@@ -162,7 +156,7 @@ const AddUserPage = () => {
             firstName: "", lastName: "", birthDate: "",
             gender: "", religion: "", diet: "", nationality: "",
             careLevel: "", misc: "", roomNumber: "",
-            profileImage: null,
+            profileImage: "",
             contact: {
                 id: null, firstName: "", lastName: "", birthDate: "",
                 power: "", relation: "", phoneNumber: "",
@@ -182,7 +176,7 @@ const AddUserPage = () => {
 
   return (
     <>
-      <HeaderAddUser/>
+      <Header/>
       <br />
       <BasicInforForm patientData={patientData} setPatientData={setPatientData} />
       <NotfallkontaktForm patientData={patientData || { contact: {} }} setPatientData={setPatientData}/>
