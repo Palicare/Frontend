@@ -6,21 +6,17 @@ const SonstigeForm = ({ sonstigeData, setSonstigeData }) => {
     const handleChange = (event) => {
         const { name, value } = event.target;
     
-       // 直接更新解析后的对象
-    //    setSonstigeData({
-    //     ...sonstigeData,
-    //     [name]: value
-    // });
+
     setSonstigeData((prevData) => ({
         ...prevData,
-        [name]: value // ✅ 直接更新 `vorliebe` 或 `abneigung`
+        [name]: value 
     }));
     
     };
     
     return (
         <div className="personal-data-container">         
-            {/* Sontige info */}
+            {/* Sontige Info */}
             <div className="personal-data-form">
                 <h2 className="form-title">Sonstige Informationen: </h2>
                 <hr className="linie-divider" />

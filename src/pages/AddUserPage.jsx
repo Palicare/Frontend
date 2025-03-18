@@ -83,7 +83,7 @@ const AddUserPage = () => {
 
   const handleSubmit = async () => {
     try {
-        // 1️⃣ 直接提交 `patient`，包含 `contact`
+        // 1
         const patientFormData = {
             firstName: patientData.firstName,
             lastName: patientData.lastName,
@@ -98,7 +98,7 @@ const AddUserPage = () => {
             allergies: medicalData.allergies || [],
             symptoms: medicalData.symptoms || [],
             careNeeds: pflegebedarf.careNeeds || [],
-            misc: sonstigeData.misc ,
+            misc: JSON.stringify(sonstigeData),//misc: sonstigeData.misc ,
             
 
 
@@ -125,13 +125,13 @@ const AddUserPage = () => {
         }
 
         const patientDataResponse = await patientResponse.json();
-        const patientId = patientDataResponse.id; // ✅ 获取 `patientID`
+        const patientId = patientDataResponse.id; 
         console.log("Neuer Patient ID:", patientId);
         console.log("Gesendete Patientendaten:", patientFormData);
         console.log("Patient Birth Date:", patientDataResponse.birthDate);
         console.log("misc:" ,patientDataResponse.misc)
 
-        // 2️⃣ If an image was taken, upload it
+        // 2
         if (patientData.profileImage) {
             const imageFormData = new FormData();
             imageFormData.append("file", patientData.profileImage);
@@ -149,7 +149,7 @@ const AddUserPage = () => {
             console.log("Profilbild erfolgreich hochgeladen.");
         }
 
-        // 3️⃣ Clear all data after successful submission
+        // 3
         alert("Patient & Notfallkontakt & Foto erfolgreich erstellt!");
 
         sessionStorage.removeItem("patientData");
@@ -188,9 +188,6 @@ const AddUserPage = () => {
       <NotfallkontaktForm patientData={patientData || { contact: {} }} setPatientData={setPatientData}/>
       {<MedicalInfoForm medicalData={medicalData} setMedicalData={setMedicalData} />}
       <PalliativepflegeForm pflegebedarf={pflegebedarf || { careNeeds: [] }} setPflegebedarf={setPflegebedarf} />
-    
-      {/* <SonstigeForm sonstigeData={JSON.parse(sonstigeData.misc)} setSonstigeData={(updatedData) => 
-        setSonstigeData({ misc: JSON.stringify(updatedData) })}/> */}
       <SonstigeForm sonstigeData={sonstigeData} setSonstigeData={setSonstigeData} />
       <div className="button-container">
         <button className="cancel-button" onClick={() => navigate("/")}>Abbrechen</button>

@@ -16,7 +16,6 @@ export default function App() {
                 <Route path="/patientenprofile" element={<Patientenprofile/>}/>
                 <Route path="/adduser" element={<AddUserPage/>}/>                          
                 <Route path="/adduser/camera/" element={<CameraView/>}/>
-
             </Routes>
         </Router>
     )
