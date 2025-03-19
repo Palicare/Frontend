@@ -66,7 +66,6 @@ const AddUserPage = () => {
         contact: { id: null, firstName: "", lastName: "", birthDate: "", phoneNumber:"",relation: "", power: "" }
       });
 
-      setNotfallData({ firstName: "", lastName: "", birthDate: "", relation: "", phoneNumber:"", power: "" });
       setMedicalData({ allergies: [], symptoms: [] });
       setPflegebedarf({ careNeeds: [] });
       setSonstigeData({ misc: JSON.stringify({ vorliebe: "", abneigung: "" }) });
