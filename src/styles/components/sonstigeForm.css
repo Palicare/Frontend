@@ -1,0 +1,273 @@
+.linie-divider {
+    border: none;
+    height: 1px;
+    color: var(--off-white);
+  }
+  
+  /* 统一所有图标的样式 */
+  .icon {
+    position: relative;
+    z-index: 10; /* 确保它在最前面 */
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+  }
+  
+  /* 左侧图标组 */
+  .icon-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 调整间距 */
+    background-color: transparent;
+  }
+  
+  /* 图标的白色圆形边框 */
+  .icon-border {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: 2px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  
+  /* 中间 Logo 区域 */
+  .logo-container {
+    flex-grow: 1; /* 让 Logo 居中对齐 */
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+  }
+  .logo {
+    height: 40px;
+    max-width: 100%;
+  }
+  
+  /* 让右侧 profile-icon 的外层 div 也有白色圆形边框 */
+  .profile-border {
+    display: flex;
+    align-items: center;
+    width: 50px;  /* 让它和左侧 .icon-border 一样大 */
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  
+  /* 用户头像的大小，确保和左侧图标匹配 */
+  .profile-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  /* BasicInForm.CSS */
+  /* 主容器：水平排列 图片 + 表单 */
+  .personal-data-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    background-color: #F8F9FA;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  /* 图片上传区域 */
+  .image-upload {
+    width: 160px;
+    height: 100%;
+    min-height: 100%; /* 确保不会低于表单区域 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #3B7E9B;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .upload-icon {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* 让图片填满区域，不变形 */
+    border-radius: 10px;
+  }
+  
+  /* 右侧表单 */
+  .form-container {
+    flex-grow: 1;
+    background-color: #3B7E9B;
+    padding: 15px;
+    border-radius: 10px;
+    color: #F8F9FA;
+    width: 100%;
+  }
+  .personal-data-form {
+    flex-grow: 1;
+    background-color: #3B7E9B;
+    padding: 15px;
+    border-radius: 10px;
+    color:  #F8F9FA;
+    width: 100%;
+  }
+  /* 让表单和图片对齐 */
+  .personal-data-container {
+    display: flex;
+    flex-direction: flex-start;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  /* 标题 */
+  .form-title {
+    background-color: transparent !important;  /* 让背景透明 */
+    margin-bottom: 10px;
+    font-size: 18px;
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* 表单网格布局 */
+  .form-grid {
+    background-color: transparent !important;  /* 让背景透明 */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 列布局 */
+    gap: 15px;
+  }
+  
+  /* 让 label 在上，input 在下 */
+  .form-group {
+    width : 100%;
+    background-color: transparent !important;  /* 让背景透明 */
+    display: flex;
+    flex-direction: column; /* 让 label 在上，input 在下 */
+  }
+  .form-group label {
+    display: block; /* 让 label 独占一行，确保它在输入框上方 */
+    font-size: 14px;
+    font-weight: bold;
+    color: #F8F9FA;
+    margin-bottom: 5px; /* 让 label 和 input 之间有间距 */
+    background-color: transparent !important; /* 避免背景遮住 label */
+    position: relative;
+    z-index: 10;
+  }
+  /* 统一输入框、选择框样式 */
+  .form-group input, 
+  .form-group select {
+    padding: 8px;
+    max-width: 300px; /* 限制最大宽度，避免太长 */
+    box-sizing: border-box; /* 避免 padding 影响宽度 */
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+  }
+  
+  /* 日期输入框带图标 */
+  .input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-group input {
+    flex-grow: 1;
+  }
+  
+  .date-icon {
+    padding-left: 5px;
+    font-size: 16px;
+    background-color: transparent;
+  }
+  
+  /* Button */
+  /* Button */
+  .button-container {
+    display: flex;
+    justify-content: flex-end; /* 右对齐 */
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .cancel-button {
+    background-color: transparent;
+    border: 2px solid #3b7e9b;
+    color: #3b7e9b;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .cancel-button:hover {
+    background-color: #3b7e9b;
+    color: white;
+  }
+  
+  .save-button {
+    background-color: #3b7e9b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .save-button:hover {
+    background-color: #2a5d7b;
+  }
+  
+  /* Button Abbrechen und Speichern */
+  /* 按钮容器 */
+  .button-container {
+    display: flex;
+    justify-content: flex-end; /* 让按钮靠右对齐 */
+    gap: 15px; /* 按钮之间的间距 */
+    margin-top: 20px;
+  }
+  
+  /* 取消按钮 */
+  .cancel-button {
+    background: white;
+    color: #3B7E9B; /* 让颜色与主色调保持一致 */
+    border: 2px solid #3B7E9B;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .cancel-button:hover {
+    background: #3B7E9B;
+    color: white;
+  }
+  
+  /* 保存按钮 */
+  .save-button {
+    background: #3B7E9B;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .save-button:hover {
+    background: #2A5F7D;
+  }
+  

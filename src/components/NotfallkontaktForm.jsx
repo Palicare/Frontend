@@ -15,7 +15,7 @@ const NotfallkontaktForm = ({ patientData, setPatientData  }) => {//
             formattedValue = new Date(value).toISOString().split("T")[0];
         }
         if (name === "power") {
-            formattedValue = value === "Ja";
+            formattedValue = value === "true" ? true : value === "false" ? false : value;
         }               
          // 更新 `patientData.contact`，不再需要 `notfallData`
         setPatientData(prevData => ({
@@ -64,8 +64,8 @@ const NotfallkontaktForm = ({ patientData, setPatientData  }) => {//
                         <label>Vollmacht: </label>
                         <select  name="power"  value={patientData.contact.power|| ""} onChange={handleChange}>
                         <option value="" disabled hidden>Bitte wählen...</option>
-                        <option>Ja</option>
-                        <option>Nein</option>
+                        <option value="true">Ja</option>
+                        <option value="false">Nein</option>
                         </select>
                     </div>                    
                 </div>

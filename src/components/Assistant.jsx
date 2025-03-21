@@ -103,8 +103,8 @@ const Assistant = () => {
         },
         body: JSON.stringify(
           text
-            .replace(/^\s+/gm, "") // Remove leading spaces from each line
-            .replace(/\n{2,}/g, "\n") // Replace multiple newlines with a single newline
+            .replace(/^\s+/gm, "")
+            .replace(/\n{2,}/g, "\n")
             .trim()
         ),
       });
@@ -113,9 +113,8 @@ const Assistant = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const audioBlob = await response.blob(); // Convert response to a Blob
-      const audioUrl = URL.createObjectURL(audioBlob); // Create a URL for playback
-
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
       return audioUrl;
     } catch (error) {
       console.error("Error generating text-to-speech audio:", error);
@@ -139,7 +138,6 @@ const Assistant = () => {
     formData.append("file", audioFile);
 
     try {
-      // Send audio file to FastAPI for transcription
       const transcriptionResponse = await fetch(`${API_BASE_URL}/api/stt`, {
         method: "POST",
         body: formData,
@@ -172,7 +170,7 @@ const Assistant = () => {
       console.error("Error transcribing audio:", error);
     }
     setIsRecording((prevState) => !prevState);
-    setIsSending(true);
+    setIsSending(false);
   };
 
   const startRecording = async () => {
