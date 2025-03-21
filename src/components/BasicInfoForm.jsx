@@ -26,9 +26,20 @@ const BasicInforForm = ({ patientData, setPatientData }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Behandlung des Geburtsdatums, um sicherzustellen, dass es im Format JJJJ-MM-TT vorliegt
+    let formattedValue = value;
+
+    if (name === "birthDate") {
+        formattedValue = new Date(value).toISOString().split("T")[0]; // 确保日期格式为 YYYY-MM-DD
+    } else if (name === "careLevel") {
+      formattedValue = value ? parseInt(value, 10).toString() : ""; // ✅ 确保是字符串
+  } else if (name === "roomNumber") {
+      formattedValue = value !== "" ? parseInt(value, 10).toString() : ""; // ✅ 确保是字符串
+  }
     setPatientData((prevData) => ({
-      ...prevData,
-      [name]: value,
+        ...prevData,
+        [name]: formattedValue,
     }));
   };
 
@@ -84,39 +95,81 @@ const BasicInforForm = ({ patientData, setPatientData }) => {
           </div>
 
           <div className="form-group">
-            <label>Religion:</label>
-            <select name="religion" value={patientData.religion} onChange={handleChange}>
-              <option value="" disabled hidden>Bitte wählen...</option>
-              <option>Keine</option>
-              <option>Christentum</option>
-              <option>Islam</option>
-              <option>Buddhism</option>
-              <option>Hinduism</option>
-              <option>Judaism</option>
-              <option>Sikhism</option>
-              <option>Taoism</option>
-              <option>Zoroastrismus</option>
-              <option>Shintoismus</option>
-              <option>Andere</option>
-            </select>
-          </div>
+  <label>Religion:</label>
+  <select name="religion" value={patientData.religion} onChange={handleChange}>
+    <option value="" disabled hidden>Bitte wählen...</option>
+    { [
+    'Christentum', 
+    'Islam',
+    'Buddhismus', 
+    'Hinduismus', 
+    'Judentum', 
+    'Sikhismus',  
+    'Taoismus',  
+    'Zoroastrismus',   
+    'Shintoismus',  
+    'Andere',  
+    'Bahá\'í-Glaube',  
+    'Jainismus',  
+    'Konfuzianismus',  
+    'Schamanismus',  
+    'Unitarismus',  
+    'Wicca',
+    'Neopaganismus',  
+    'Scientology',
+    'Rastafari',
+    'Cao Dai',
+    'Falun Gong',
+    'Tenrikyo',
+    'Scientology-Kirche', 
+    'Eckankar',
+    'Atheismus',  
+    'Agnostizismus',  
+    'Humanismus',  
+    'Säkularismus',  
+    'Freidenkertum',  
+    'Rationalismus',  
+    'Katholizismus',  
+    'Protestantismus',  
+    'Lutheranismus',  
+    'Kalvinismus',  
+    'Anglikanismus',  
+    'Orthodoxie',  
+    'Evangelikalismus',  
+    'Pfingstbewegung',  
+    'Unitarismus',  
+    'Mormonismus',   
+    'Zeugen Jehovas',  
+    'Altkatholizismus',    
+    'Quäkertum',  
+    'Freikirchen', 
+    'Heilsarmee',   
+    'Baptismus',  
+    'Methodismus',  
+    'Adventismus', 
+    'Charismatische Bewegung',  
+    'Hutterer',  
+    'Christliche Wissenschaft',  
+    'Unitarische Universalisten',  
+]
+      .sort()  // Sort alphabetically
+      .map((religion) => (
+        <option key={religion} value={religion}>{religion}</option>
+      ))}
+  </select>
+</div>
 
           <div className="form-group">
-            <label>Ernährungstyp:</label>
-            <select name="diet" value={patientData.diet} onChange={handleChange}>
-              <option value="" disabled hidden>Bitte wählen...</option>
-              <option>Normalkost</option>
-              <option>Hausmannskost</option>
-              <option>Vegetarisch</option>
-              <option>Vegan</option>
-              <option>Halal</option>
-              <option>Koscher</option>
-              <option>Diät</option>
-              <option>Glutenfreie Ernährung</option>
-              <option>Laktosefreie Ernährung</option>
-              <option>Andere</option>
-            </select>
-          </div>
+  <label>Ernährungstyp:</label>
+  <input 
+    type="text" 
+    name="diet" 
+    value={patientData.diet} 
+    onChange={handleChange} 
+    placeholder="Bitte geben Sie den Ernährungstyp ein..."
+  />
+</div>
+
 
           <div className="form-group">
             <label>Plegestufe:</label>
@@ -131,8 +184,8 @@ const BasicInforForm = ({ patientData, setPatientData }) => {
           </div>
 
           <div className="form-group">
-            <label>Raumnummer:</label>
-            <input type="text" placeholder="Raumnummer eingeben" name="roomNumber" value={patientData.roomNumber || ""} onChange={handleChange} />
+            <label>Zimmernummer:</label>
+            <input type="number" placeholder="Zimmernummer eingeben" name="roomNumber" value={patientData.roomNumber || ""} onChange={handleChange} />
           </div> 
         </div>
       </div>

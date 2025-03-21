@@ -336,7 +336,7 @@
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  background-color: transparent;
+  background-color: var(--off-white);
   color: black;
 }
 
@@ -437,4 +437,26 @@
 
 .save-button:hover {
   background: #2A5F7D;
+}
+
+.multi-line-input {
+  width: 100%;
+  max-width: 810px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: none; /* Allows resizing the textarea vertically */
+}
+
+.multi-line-input:focus {
+  border-color: #66afe9;
+  outline: none;
+}
+
+.form-grid-two-columns {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr 1fr; /* Creates two equal-width columns */
 }
