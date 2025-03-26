@@ -38,7 +38,7 @@ const AddUserPage = () => {
 
   const [sonstigeData, setSonstigeData] = useState(() => {
     const storedData = sessionStorage.getItem("sonstigeData");
-    return storedData ? JSON.parse(storedData) : { vorliebe: "", abneigung: "" };
+    return storedData ? JSON.parse(storedData) : { Vorlieben: "", Abneigungen: "" };
 });
 
 
@@ -69,7 +69,7 @@ const AddUserPage = () => {
 
       setMedicalData({ allergies: [], symptoms: [] });
       setPflegebedarf({ careNeeds: [] });
-      setSonstigeData({ vorliebe: "", abneigung: "" });
+      setSonstigeData({ Vorlieben: "", Abneigungen: "" });
     }
   }, [location]); // Runs on route change **and** page load
 
@@ -165,7 +165,7 @@ const AddUserPage = () => {
         });
         setMedicalData({ allergies: [], symptoms: [] });
         setPflegebedarf({ careNeeds: [] });
-        setSonstigeData(JSON.stringify({ vorliebe: "", abneigung: "" }));
+        setSonstigeData(JSON.stringify({ Vorlieben: "", Abneigungen: "" }));
 
     } catch (error) {
         console.error("Speicherungsfehler:", error);

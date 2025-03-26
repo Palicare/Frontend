@@ -26,8 +26,8 @@ const SonstigeForm = ({ sonstigeData, setSonstigeData }) => {
             <textarea
               id="vorliebe"
               placeholder="Vorlieben eingeben"
-              name="vorliebe"
-              value={sonstigeData.vorliebe || ""}
+              name="Vorlieben"
+              value={sonstigeData.Vorlieben || ""}
               onChange={handleChange}
               className="multi-line-input"
               rows="4" // Adjust this value to set the number of visible rows
@@ -41,8 +41,8 @@ const SonstigeForm = ({ sonstigeData, setSonstigeData }) => {
             <textarea
               id="abneigung"
               placeholder="Abneigungen eingeben"
-              name="abneigung"
-              value={sonstigeData.abneigung || ""}
+              name="Abneigungen"
+              value={sonstigeData.Abneigungen || ""}
               onChange={handleChange}
               className="multi-line-input"
               rows="4" // Adjust this value to set the number of visible rows
