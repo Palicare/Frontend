@@ -1,0 +1,58 @@
+@import url("../defaultcolors.css");
+.informationField-container {
+    background-color: var(--main-blue);
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.informationField-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.informationField-divider {
+    border: none;
+    border-top: 2px solid white;
+    margin-bottom: 1rem;
+}
+
+.informationField-box {
+    background-color: var(--off-white);
+    border-radius: 12px;
+    padding: 1.5rem 1rem 1rem; /* extra top padding to align with first pink line */
+    margin-bottom: 1rem;
+    position: relative;
+    font-size: 1rem;
+    color: black; /* Set text color */
+    line-height: 1.5rem; /* matches the line spacing */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+/* Fake lined paper effect */
+.informationField-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 1.4rem,
+        var(--light-blue) 1.4rem,
+        var(--light-blue) 1.5rem
+    );
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.informationField-box p {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    color: black; /* Ensure text is black */
+}

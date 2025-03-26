@@ -94,33 +94,40 @@ const Assistant = () => {
   };
 
   const getTextToSpeach = async (text) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/tts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "*/*",
-        },
-        body: JSON.stringify(
-          text
-            .replace(/^\s+/gm, "")
-            .replace(/\n{2,}/g, "\n")
-            .trim()
-        ),
-      });
+  try {
+    // Clean formatting like Markdown (**bold**, *italic*, etc.)
+    const cleanedText = text
+      .replace(/\*\*(.*?)\*\*/g, "$1")      // remove **bold**
+      .replace(/\*(.*?)\*/g, "$1")          // remove *italic*
+      .replace(/#+\s?(.*)/g, "$1")          // remove markdown headings
+      .replace(/`{1,3}(.*?)`{1,3}/g, "$1")  // remove inline code blocks
+      .replace(/\[(.*?)\]\((.*?)\)/g, "$1") // remove Markdown links but keep text
+      .replace(/^\s+/gm, "")                // remove leading whitespace
+      .replace(/\n{2,}/g, "\n")             // remove extra newlines
+      .trim();
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+    const response = await fetch(`${API_BASE_URL}/api/tts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+      },
+      body: JSON.stringify(cleanedText),
+    });
 
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      return audioUrl;
-    } catch (error) {
-      console.error("Error generating text-to-speech audio:", error);
-      return null;
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-  };
+
+    const audioBlob = await response.blob();
+    const audioUrl = URL.createObjectURL(audioBlob);
+    return audioUrl;
+  } catch (error) {
+    console.error("Error generating text-to-speech audio:", error);
+    return null;
+  }
+};
+
 
   const saveMessage = async () => {
     setIsSending(true);

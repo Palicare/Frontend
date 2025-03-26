@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import PersonalCard from "../components/PersonalCard";
 import Assistant from "../components/Assistant";
 import InformationField from "../components/InformationField";
+import InformationFieldJSON from "../components/InformationFieldJSON"
 import "../styles/detailViewPage.css";
 
 const allergiesTest = ["Pollen", "Laktose", "Hülsenfrüchte"];
@@ -94,7 +95,7 @@ const DetailViewPage = () => {
               data={patientData.careNeeds}
             />
             <InformationField title="Symptome" data={patientData.symptoms} />
-            <InformationField
+            <InformationFieldJSON
               title="Sonstiges"
               data={patientData.misc ? patientData.misc.split(" ") : []}
             />

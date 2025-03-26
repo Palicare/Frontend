@@ -5,7 +5,6 @@
   background-color: var(--main-blue);
   color: var(--off-white);
   width: 85%;
-  min-width: 650px;
   cursor: pointer;
 }
 
@@ -66,7 +65,7 @@
 }
 
 .patient-details {
-  padding: 0.75rem 0;
+  padding: 0.75rem;
 }
 
 .patient-detail-row {

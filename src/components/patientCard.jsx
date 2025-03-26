@@ -162,15 +162,18 @@ const PatientCard = ({ patient, id }) => {
             <div className="patient-detail-row">
               <div className="detail-label">Religion:</div>
               <div className="detail-value">{displayData.religion}</div>
-
-              <div className="detail-label diet-label">Ernährungstyp:</div>
-              <div className="detail-value">{displayData.dietType}</div>
             </div>
 
             <div className="patient-detail-row">
               <div className="detail-label">Erkrankung:</div>
               <div className="detail-value">{displayData.condition}</div>
             </div>
+
+            <div className="patient-detail-row">
+              <div className="detail-label">Ernährungstyp:</div>
+              <div className="detail-value">{displayData.dietType}</div>
+            </div>
+
           </div>
         </div>
         {/* middle section with avatar */}
