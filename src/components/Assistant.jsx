@@ -6,6 +6,8 @@ import MicrophoneIcon from "../Assets/Microphone.svg";
 import RecordingIcon from "../Assets/Recording.svg";
 import Send from "../Assets/send.svg";
 import X from "../Assets/X.svg";
+import ReactMarkdown from "react-markdown";
+
 
 const Assistant = () => {
   const { patientId } = useParams();
@@ -245,7 +247,7 @@ const Assistant = () => {
                   msg.role === "user" ? "humanText" : "chatbotText"
                 }`}
               >
-                <p>{msg.text}</p>
+                <ReactMarkdown>{msg.text}</ReactMarkdown>
                 <audio controls onPlay={(e) => (e.target.playbackRate = 1.25)}>
                   <source src={msg.audioUrl} type="audio/wav" />
                 </audio>
