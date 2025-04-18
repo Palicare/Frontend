@@ -20,7 +20,7 @@ const Header = ({ isHomeScreen }) => {
         )}
 
         {isHomeScreen && (
-          <button onClick={() => navigate()} className="icon-button">
+          <button onClick={() => navigate("/addUser")} className="icon-button">
           <div className="icon-border">
             <img src={AddPatient} alt="Add Patient" />
           </div>
@@ -28,9 +28,9 @@ const Header = ({ isHomeScreen }) => {
         )}
       </div>
       <img className="logo" src={paliLogo1} alt="Logo" />
-      <button onClick={() => navigate()} className="icon-button">
+       <button onClick={() => navigate()} className="icon-button" style={{marginRight: '40px'}}>
         <div className="icon-border">
-          <img src={Profile} alt="Profile" />
+          {/*<img src={Profile} alt="Profile" />*/}
         </div>
       </button>
     </div>

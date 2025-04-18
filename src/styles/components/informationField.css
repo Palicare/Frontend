@@ -1,3 +1,4 @@
+@import url("../defaultcolors.css");
 .informationField-container {
     background-color: var(--main-blue);
     padding: 15px;
@@ -18,3 +19,18 @@
     color: var(--off-white);
 }
 
+.informationField-tags {
+    display: block;
+    margin-top: 10px;
+}
+
+
+.informationField-tag {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: black;
+    margin-bottom: 8px; /* Für etwas Abstand zwischen den Kästchen */
+}

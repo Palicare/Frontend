@@ -1,0 +1,100 @@
+@import url("defaultcolors.css");
+
+.recordButton.active {
+    width: 4em;
+    height: 4em;
+    background-color: var(--soft-pink);
+    border-radius: 50em;
+    border: 2px solid var(--mid-gray);
+    box-shadow: none;
+    display: block;
+    margin: 20px auto;
+}
+
+.recordButton.passiv {
+    color: red;
+    width: 4em;
+    height: 4em;
+    background-color: var(--light-gray);
+    border-radius: 50em;
+    border: 2px solid var(--mid-gray);
+    box-shadow: none;
+    display: block;
+    margin: 10px auto;
+}
+
+.capturedImage{
+    width: 50vw;
+}
+
+.cameraFeed {
+    width: 50vw; /* 677px / 971px * 100vw */
+    max-width: 677px;
+    border: 15px solid var(--light-blue);
+    border-radius: 20px;
+    margin: 2em auto;
+    text-align: center;
+}
+
+.camera {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Ensures it remains a square */
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: black;
+    display: block;
+    margin: 0 auto;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.buttonWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recordButton.active,
+.recordButton.passiv {
+    width: 6em;
+    height: 6em;
+    border-radius: 50em;
+    border: 2px solid var(--mid-gray);
+    box-shadow: none;
+    display: block;
+}
+
+.recordButton.active {
+    background-color: var(--soft-pink);
+}
+
+.recordButton.passiv {
+    background-color: var(--light-gray);
+}
+
+.actionButtonGroup {
+    display: flex;
+    justify-content: center;
+}
+
+.actionbutton {
+    width: 216px;
+    color: var(--light-gray);
+    font-size: 20px;
+    font-weight:600;
+    background-color: var(--main-blue);
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 6em;
+    border: none; 
+}

@@ -5,12 +5,15 @@ const InformationField = ({ title, data }) => {
         <div className="informationField-container">
             <p className="informationField-title">{title}:</p>
             <hr className="informationField-divider" />
-            {data.map((item, index) => (
-                    <p key={index}>{item}</p>
+            <div className="informationField-tags">
+                {data.map((item, index) => (
+                    <div key={index} className="informationField-tag">
+                        {item}
+                    </div>
                 ))}
+            </div>
         </div>
     );
 };
 
 export default InformationField;
-

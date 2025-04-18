@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
+import API_BASE_URL from "../config";
+
 import Header from "../components/Header";
 import PersonalCard from "../components/PersonalCard";
 import Assistant from "../components/Assistant";
 import InformationField from "../components/InformationField";
+import InformationFieldJSON from "../components/InformationFieldJSON"
 import "../styles/detailViewPage.css";
 
 const allergiesTest = ["Pollen", "Laktose", "Hülsenfrüchte"];
@@ -43,9 +46,7 @@ const DetailViewPage = () => {
   useEffect(() => {
     const getPatientData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8080/patients/${patientId}`
-        );
+        const response = await fetch(`${API_BASE_URL}/api/patients/${patientId}`);
         const data = await response.json();
         setPatientData(data);
         console.log(data.contact);
@@ -94,7 +95,7 @@ const DetailViewPage = () => {
               data={patientData.careNeeds}
             />
             <InformationField title="Symptome" data={patientData.symptoms} />
-            <InformationField
+            <InformationFieldJSON
               title="Sonstiges"
               data={patientData.misc ? patientData.misc.split(" ") : []}
             />

@@ -1,12 +1,12 @@
 
 @import url("defaultcolors.css");
 
-.contentArea{
-    margin-top: 5.8vh;
-    margin-bottom:25vh;
-    height: 35vh;
-    
+.contentArea {
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
 }
+
 
 .lowerInteractionBar{
     background-color: var(--main-blue);
@@ -38,6 +38,41 @@
     border-radius: 4em;
     padding: 1em;
 }
+
+.loadingIndicator {
+    border: none;
+    background: var(--main-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: -3em;
+    margin: 0 auto;
+    border-radius: 4em;
+    padding: 1em;
+    width: 3em;
+    height: 3em;
+}
+
+.loadingIndicator::after {
+    content: "";
+    width: 1.5em;
+    height: 1.5em;
+    border: 8px dotted white;
+    border-radius: 50%;
+    animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
 
 .minorInteractionA, 
 .minorInteractionB, 
@@ -76,13 +111,30 @@ img{
 }
 
 
-.chatArea{
-    margin-top: 10em;
+.chat-title {
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+
+.chatArea {
+    margin-top: 2em;
     display: flex;
     flex-direction: column;
     width: 100%;
-    overflow: auto;
+    overflow-y: scroll; /* Allows scrolling */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+    flex-grow: 1;
+    scrollbar-width: none; /* Firefox: Hides scrollbar */
+    -ms-overflow-style: none; /* IE/Edge: Hides scrollbar */
 }
+
+.chatArea::-webkit-scrollbar {
+    display: none; /* Chrome, Safari: Hides scrollbar */
+}
+
+
 
 .text{
     border-radius: 10px;
@@ -119,4 +171,14 @@ p{
     font-size: 16px;
     background-color: transparent;
     color: var(--off-white);
+}
+
+.text.chatbotText li,
+.text.chatbotText li::marker,
+.text.chatbotText strong,
+.text.chatbotText ul,
+.text.chatbotText ol,
+.text.chatbotText p {
+    color: var(--off-white);
+    background-color: var(--main-blue);
 }

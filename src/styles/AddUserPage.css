@@ -1,0 +1,462 @@
+
+.linie-divider {
+  border: none;
+  height: 1px;
+  color: var(--off-white);
+}
+
+  
+  /* 统一所有图标的样式 */
+  .icon {
+    position: relative;
+    z-index: 10; /* 确保它在最前面 */
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+  }
+  
+  /* 左侧图标组 */
+  .icon-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 调整间距 */
+    background-color: transparent;
+  }
+  
+  /* 图标的白色圆形边框 */
+  .icon-border {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: 2px ;
+    
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  
+  /* 中间 Logo 区域 */
+  .logo-container {
+    flex-grow: 1; /* 让 Logo 居中对齐 */
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+  }  
+  .logo {
+    height: 40px;
+    max-width: 100%;
+  }
+  
+/* 让右侧 profile-icon 的外层 div 也有白色圆形边框 */
+.profile-border {
+    display: flex;
+    align-items: center;   
+    width: 50px;  /* 让它和左侧 .icon-border 一样大 */
+    height: 50px;   
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: transparent;
+} 
+/* 用户头像的大小，确保和左侧图标匹配 */
+.profile-icon {
+    width: 32px;
+    height: 32px;
+}
+
+
+/* BasicInForm.CSS */
+/* 主容器：水平排列 图片 + 表单 */
+.personal-data-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background-color: #F8F9FA;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+
+/* 图片上传区域 */
+.image-upload {
+  width: 160px;
+  height: 100%;
+  min-height: 100%; /* 确保不会低于表单区域 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #3B7E9B;
+  border-radius: 10px;
+  cursor: pointer;
+  
+}
+
+.upload-icon {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* 让图片填满区域，不变形 */
+  border-radius: 10px;
+}
+
+/* 右侧表单 */
+.form-container {
+  flex-grow: 1;
+  background-color: #3B7E9B;
+  padding: 15px;
+  border-radius: 10px;
+  color: #F8F9FA;
+  width: 100%;
+}
+.personal-data-form {
+  flex-grow: 1;
+  background-color: #3B7E9B;
+  padding: 15px;
+  border-radius: 10px;
+  color:  #F8F9FA;
+  width: 100%;
+}
+/* 让表单和图片对齐 */
+.personal-data-container {
+  display: flex;
+  flex-direction: flex-start;
+  
+
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+/* 标题 */
+.form-title {
+  background-color: transparent !important;  /* 让背景透明 */
+  margin-bottom: 10px;
+  font-size: 18px;
+  position: relative;
+  z-index: 10;
+}
+
+/* 表单网格布局 */
+.form-grid {
+  background-color: transparent !important;  /* 让背景透明 */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 列布局 */
+  gap: 15px;
+}
+
+/* 让 label 在上，input 在下 */
+.form-group {
+  width : 100%;
+  background-color: transparent !important;  /* 让背景透明 */
+  display: flex;
+  flex-direction: column; /* 让 label 在上，input 在下 */
+}
+.form-group label {
+  display: block; /* 让 label 独占一行，确保它在输入框上方 */
+  font-size: 14px;
+  font-weight: bold;
+  color: #F8F9FA;
+  margin-bottom: 5px; /* 让 label 和 input 之间有间距 */
+  background-color: transparent !important; /* 避免背景遮住 label */
+  position: relative;
+  z-index: 10;
+}
+/* 统一输入框、选择框样式 */
+.form-group input, 
+.form-group select {
+  padding: 8px;
+  max-width: 300px; /* 限制最大宽度，避免太长 */
+  box-sizing: border-box; /* 避免 padding 影响宽度 */
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+}
+
+/* 日期输入框带图标 */
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.input-group input {
+  flex-grow: 1;
+}
+
+.date-icon {
+  padding-left: 5px;
+  font-size: 16px;
+  background-color: transparent;
+}
+
+
+/* NotFallKontaktForm keine Neue CSS*/
+
+
+/* PalliativInfoForm */
+/* 表单网格布局 */
+.form-grid-PalliativeForm {
+  background-color: transparent !important;  /* 让背景透明 */
+  display: grid;
+  grid-template-columns:  1fr; /* 3 列布局 */
+  gap: 15px;
+  justify-content: center; /* 让输入框在中间 */
+}
+
+
+/* 让输入框更宽 */
+.form-input-PalliativeForm {
+  width: 100%;  /* 让输入框占满父容器 */
+  max-width: 100%; /* 限制最大宽度，避免太长 */
+  min-width: 500px; /* 让输入框有合适的最小宽度 */
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  resize: vertical; /* 允许用户拖动调整 */
+  overflow: auto;
+}
+
+/* keine PalliativeForm  use the same with the MedicalInfoForm*/
+
+
+/* Button */
+/* Button */
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* 右对齐 */
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.cancel-button {
+  background-color: transparent;
+  border: 2px solid #3b7e9b;
+  color: #3b7e9b;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #3b7e9b;
+  color: white;
+}
+
+.save-button {
+  background-color: #3b7e9b;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #2a5d7b;
+}
+
+
+
+/* medicalinfoForm add new*/
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-field {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-button {
+  margin-left: 8px;
+  padding: 8px;
+  background-color: #ccc;
+  color: black;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.info-text {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* 容器样式 */
+.medical-info-container {
+  background-color: #4a708b; /* 适配右侧 UI 的背景色 */
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+  margin: auto;
+  color: transparent;
+  background-color: transparent;
+}
+
+/* 每个输入框的整体容器 */
+.medical-section {
+  margin-bottom: 15px;
+  color: black;
+  background-color: transparent;
+}
+
+/* 标签（如 Allergien: Symptome:） */
+.medical-label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--off-white);
+  background-color: transparent;
+}
+
+/* 输入框与按钮在同一行 */
+.medical-input-group {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* 让按钮和输入框有间距 */
+  
+}
+
+/* 输入框样式 */
+.medical-input {
+  flex: 1; /* 让输入框填充剩余空间 */
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: var(--off-white);
+  color: black;
+}
+
+
+/* 添加按钮样式 */
+.medical-add-button {
+  padding: 8px 12px;
+  background-color: var(--off-white);
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid #ccc;
+}
+
+.medical-remove-button{
+  padding: 2px 6px; /* 调整内边距，使按钮变小 */
+  font-size: 12px; /* 缩小字体大小 */
+  background-color: var(--off-white);
+  color: black;
+  border-radius: 3px; /* 调整圆角 */
+  cursor: pointer;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  display: inline-flex; /* 让按钮内部内容居中 */
+  align-items: center;
+  justify-content: center;
+  width: 20px; /* 控制按钮宽度 */
+  height: 20px; /* 控制按钮高度 */
+  line-height: 1; /* 调整行高，确保‘X’垂直居中 */
+}
+
+.medical-add-button:hover {
+  background-color: #ddd;
+}
+
+/* 输入之后展示框内容 */
+.medical-display {
+  font-size: 14px;
+  margin-top: 5px;
+  background: transparent(255, 255, 255, 0.2);
+  padding: 5px;
+  border-radius: 5px;
+}
+.medical-item {
+  background-color: #fff;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #ccc;
+}
+
+
+/*Button Abbrechen und Speichern */
+
+/* 按钮容器 */
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* 让按钮靠右对齐 */
+  gap: 15px; /* 按钮之间的间距 */
+  margin-top: 20px;
+}
+
+/* 取消按钮 */
+.cancel-button {
+  background: white;
+  color: #3B7E9B; /* 让颜色与主色调保持一致 */
+  border: 2px solid #3B7E9B;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-button:hover {
+  background: #3B7E9B;
+  color: white;
+}
+
+/* 保存按钮 */
+.save-button {
+  background: #3B7E9B;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-button:hover {
+  background: #2A5F7D;
+}
+
+.multi-line-input {
+  width: 100%;
+  max-width: 810px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: none; /* Allows resizing the textarea vertically */
+}
+
+.multi-line-input:focus {
+  border-color: #66afe9;
+  outline: none;
+}
+
+.form-grid-two-columns {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr 1fr; /* Creates two equal-width columns */
+}

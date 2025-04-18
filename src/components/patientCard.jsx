@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/components/PatientCard.css";
+import API_BASE_URL from "../config";
 
 // room icon
 const RoomIcon = () => (
@@ -13,7 +14,7 @@ const RoomIcon = () => (
     <path
       fill="var(--ci-primary-color, currentColor)"
       d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z"
-      class="ci-primary"
+      className="ci-primary"
     />
     <rect
       width="32"
@@ -21,7 +22,7 @@ const RoomIcon = () => (
       x="256"
       y="232"
       fill="var(--ci-primary-color, currentColor)"
-      class="ci-primary"
+      className="ci-primary"
     />
   </svg>
 );
@@ -51,7 +52,7 @@ const PatientCard = ({ patient, id }) => {
     const fetchPatientData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8080/patients/${id}`);
+        const response = await fetch(`${API_BASE_URL}/api/patients/${id}`);
 
         if (!response.ok) {
           throw new Error(`Failed to fetch patient data: ${response.status}`);
@@ -85,7 +86,7 @@ const PatientCard = ({ patient, id }) => {
   const handleCardClick = () => {
     const patientId = patient?.id || id;
     if (patientId) {
-      navigate(`/PatientenProfil/${patientId}`);
+      navigate(`/detailView/${patientId}`);
     }
   };
 
@@ -119,8 +120,8 @@ const PatientCard = ({ patient, id }) => {
 
   // profile picture
   const profilePictureUrl = patientId
-    ? `http://localhost:8080/patients/${patientId}/profile-picture`
-    : "./src/Assets/DefaultUser.png";
+  ? `${API_BASE_URL}/api/patients/${patientId}/profile-picture`
+  : "./src/Assets/DefaultUser.png";
 
   const displayData = {
     name:
@@ -161,15 +162,18 @@ const PatientCard = ({ patient, id }) => {
             <div className="patient-detail-row">
               <div className="detail-label">Religion:</div>
               <div className="detail-value">{displayData.religion}</div>
-
-              <div className="detail-label diet-label">Ernährungstyp:</div>
-              <div className="detail-value">{displayData.dietType}</div>
             </div>
 
             <div className="patient-detail-row">
               <div className="detail-label">Erkrankung:</div>
               <div className="detail-value">{displayData.condition}</div>
             </div>
+
+            <div className="patient-detail-row">
+              <div className="detail-label">Ernährungstyp:</div>
+              <div className="detail-value">{displayData.dietType}</div>
+            </div>
+
           </div>
         </div>
         {/* middle section with avatar */}

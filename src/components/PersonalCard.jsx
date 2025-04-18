@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../styles/components/personalCard.css";
+import API_BASE_URL from "../config";
 
 import DefaultUserIcon from "../Assets/DefaultUser.png"
 import RoomIcon from "../Assets/Room.svg"
@@ -14,7 +15,8 @@ const PersonalCard = () => {
   useEffect(() => {
     const getPatientData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/patients/${patientId}`);
+        const response = await fetch(`${API_BASE_URL}/api/patients/${patientId}`);
+
         if (!response.ok) {
           throw new Error("Failed to fetch patient data");
         }
@@ -43,7 +45,7 @@ const PersonalCard = () => {
     <div className="profile-container">
       <div className="profile-image">
         <img
-          src={patientData?.imageUrl || DefaultUserIcon}
+          src={`${API_BASE_URL}/api/patients/${patientId}/profile-picture` || DefaultUserIcon}
           style={{ width: "200px", height: "200px", display: "inline-block" }}
           alt="Patient"
         />
@@ -63,7 +65,7 @@ const PersonalCard = () => {
           <br />
           <p>
             <strong>Name: </strong>
-            {patientData?.firstName} {patientData?.lastName}
+            {patientData?.firstName || "N/A"} {patientData?.lastName || ""}
           </p>
           <p>
             <strong>Geschlecht:</strong> {patientData?.gender || "N/A"}
@@ -72,7 +74,10 @@ const PersonalCard = () => {
             <strong>Geburtsdatum:</strong> {patientData?.birthDate ? formatDate(patientData?.birthDate) : "N/A"}
           </p>
           <p>
-            <strong>Notfallkontakt:</strong> {patientData?.contact.firstName} {patientData?.contact.lastName}  ({patientData?.contact.relation})  
+            <strong>Notfallkontakt:</strong>
+            {patientData?.contact
+              ? `${patientData.contact.firstName} ${patientData.contact.lastName} (${patientData.contact.relation})`
+              : "N/A"}
           </p>
           <p>
             <strong>Religion:</strong> {patientData?.religion || "N/A"}
@@ -82,9 +87,6 @@ const PersonalCard = () => {
           </p>
           <p>
             <strong>Ernährungstyp:</strong> {patientData?.diet || "N/A"}
-          </p>
-          <p>
-            <strong>Krankenkasse:</strong> {patientData?.insurance || "N/A"}
           </p>
         </div>
       </div>
